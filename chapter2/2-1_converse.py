@@ -16,5 +16,5 @@ response = client.converse(
     }]
 )
 
-# 実行結果を画面に表示
+# 実行結果のテキストだけを画面に表示
 print(response["output"]["message"]["content"][0]["text"])
