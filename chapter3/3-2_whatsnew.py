@@ -1,3 +1,4 @@
+# 必要なライブラリをインポート
 import feedparser
 from strands import Agent, tool
 from dotenv import load_dotenv
