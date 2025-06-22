@@ -34,13 +34,9 @@ agent = Agent(
     tools=[get_aws_updates]
 )
 
-while True:
-    # ユーザー入力を取得
-    service_name = input("アップデートを知りたいAWSサービス名を入力してください: ").strip()
-    
-    # プロンプトを指定してエージェントを起動
-    prompt = f"AWSの{service_name}の最新アップデートを、日付つきで要約して。"
-    response = agent(prompt)
+# ユーザー入力を取得
+service_name = input("アップデートを知りたいAWSサービス名を入力してください: ").strip()
 
-    # 最後に改行
-    print("\n\n")
+# プロンプトを指定してエージェントを起動
+prompt = f"AWSの{service_name}の最新アップデートを、日付つきで要約して。"
+response = agent(prompt)
