@@ -1,11 +1,8 @@
-# 環境変数
 .env
+.claude
 
 # uv関連
 .venv
 .python-version
 pyproject.toml
 uv.lock
-
-# Claude Code
-.claude
