@@ -24,4 +24,3 @@ for event in response.get('stream', []):
     if 'contentBlockDelta' in event:
         chunk = event['contentBlockDelta']['delta']['text']
         print(chunk, end='')
-print() # 最後に改行

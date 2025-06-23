@@ -1,1 +1,11 @@
+# 環境変数
 .env
+
+# uv関連
+.venv
+.python-version
+pyproject.toml
+uv.lock
+
+# Claude Code
+.claude
