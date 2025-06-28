@@ -17,8 +17,7 @@ def math_agent(query: str) -> str:
 @tool
 def haiku_agent(query: str) -> str:
     agent = Agent(
-        system_prompt="与えられたお題で五・七・五の俳句を詠んで",
-        tools=[]
+        system_prompt="与えられたお題で五・七・五の俳句を詠んで"
     )
     return str(agent(query))
 
