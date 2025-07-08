@@ -1,4 +1,4 @@
-
+from botocore.config import Config
 from langchain.chat_models import init_chat_model
 from langchain_community.agent_toolkits import FileManagementToolkit
 from langchain_tavily import TavilySearch
@@ -34,9 +34,13 @@ tools = [web_search, write_file]
 tools_by_name = {tool.name: tool for tool in tools}
 
 # LLMの初期化
+cfg = Config(
+    read_timeout=300,
+)
 llm_with_tools = init_chat_model(
     model="us.anthropic.claude-sonnet-4-20250514-v1:0",
     model_provider="bedrock_converse",
+    config=cfg,
 ).bind_tools(tools)
 
 # システムプロンプト
