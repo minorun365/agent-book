@@ -13,7 +13,7 @@ from pydantic import BaseModel
 from typing import Annotated, Dict, List, Union
 
 from dotenv import load_dotenv
-load_dotenv("/workspaces/agent-book/.env")
+load_dotenv("../.env")
 
 web_search = TavilySearch(max_results=2)
 

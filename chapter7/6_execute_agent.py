@@ -8,7 +8,7 @@ from langgraph.prebuilt import create_react_agent
 
 # 環境変数の読み込み
 from dotenv import load_dotenv
-load_dotenv("/workspaces/agent-book/.env")
+load_dotenv("../.env")
 
 # ReActエージェントの構築
 def create_agent(model : str, temperature: float):
@@ -40,6 +40,4 @@ response = agent.invoke(
     messagses,
     config={"callbacks": [langfuse_handler]}
 )
-for message in response["messages"]:
-    message.pretty_print()
-
+response["messages"][-1].pretty_print()

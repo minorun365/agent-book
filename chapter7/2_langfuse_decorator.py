@@ -5,7 +5,7 @@ from langfuse import observe
 from tavily import TavilyClient
 
 from dotenv import load_dotenv
-load_dotenv("/workspaces/agent-book/.env")
+load_dotenv("../.env")
 
 # Amazon Bedrockを呼び出すために利用
 bedrock_client = boto3.client("bedrock-runtime")

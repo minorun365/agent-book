@@ -16,7 +16,7 @@ from langgraph.graph import add_messages
 
 # .envから環境変数ファイルを読みだし
 from dotenv import load_dotenv
-load_dotenv("/workspaces/agent-book/.env")
+load_dotenv("../.env")
 
 # ツールの定義
 # Web検索ツール

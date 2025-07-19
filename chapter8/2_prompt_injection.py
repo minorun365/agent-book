@@ -4,7 +4,7 @@ from langchain_core.messages import SystemMessage
 
 # .envファイルの読み込み
 from dotenv import load_dotenv
-load_dotenv("/workspaces/agent-book/.env")
+load_dotenv("../.env")
 
 # システムプロンプトを含むプロンプトテンプレート
 prompt = ChatPromptTemplate(
