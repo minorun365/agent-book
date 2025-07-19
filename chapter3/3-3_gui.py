@@ -10,7 +10,7 @@ load_dotenv()
 
 # ツールを定義
 @tool
-def get_aws_updates(service_name: str) -> str:
+def get_aws_updates(service_name: str) -> list:
     # AWS What's NewのRSSフィードをパース
     feed = feedparser.parse("https://aws.amazon.com/about-aws/whats-new/recent/feed/")    
     result = []
@@ -18,7 +18,8 @@ def get_aws_updates(service_name: str) -> str:
     # フィードの各エントリをチェック
     for entry in feed.entries:
         # 件名にサービス名が含まれているかチェック
-        if service_name.lower() in entry.title.lower():
+        title = entry.get("title", "")
+        if isinstance(title, str) and service_name.lower() in title.lower():
             result.append({
                 "published": entry.get("published", "N/A"),
                 "summary": entry.get("summary", "")
@@ -32,7 +33,7 @@ def get_aws_updates(service_name: str) -> str:
 
 # エージェントを作成
 agent = Agent(
-    model="us.anthropic.claude-3-5-haiku-20241022-v1:0",
+    model="us.anthropic.claude-sonnet-4-20250514-v1:0",
     tools=[get_aws_updates]
 )
 
