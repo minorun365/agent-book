@@ -103,28 +103,10 @@ async def main():
     question = "Bedrockで利用可能なモデルプロパイダーを教えて！"
     response = await graph.ainvoke(
         {"messages":
-            [
-                HumanMessage(question)
-            ]
+            [HumanMessage(question)]
         }
     )
     print(response)
     return response
 
 asyncio.run(main())
-
-
-# mcp_client = MultiServerMCPClient(
-#     {
-#         "file-system": {
-#             "command": "npx",
-#             "args": [
-#                 "-y",
-#                 "@modelcontextprotocol/server-filesystem",
-#                 "./"
-#             ],
-#             "transport": "stdio",
-#         },
-#         <中略>
-#     }
-# )
