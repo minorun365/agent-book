@@ -4,6 +4,7 @@ import { createTool } from '@mastra/core/tools';
 import { bedrock } from '@ai-sdk/amazon-bedrock';
 import { z } from 'zod';
 
+// ツールを定義
 const addTool = createTool({
     id: '足し算ツール',
     description: '2つの数を足します。',
@@ -16,6 +17,7 @@ const addTool = createTool({
     },
 });
 
+// エージェントを定義
 const calculatorAgent = new Agent({
     name: '計算エージェント',
     instructions: 'ツールを使って足し算ができます。',
@@ -23,6 +25,7 @@ const calculatorAgent = new Agent({
     tools: { addTool },
 });
 
+// Mastraインスタンスを作成
 export const mastra = new Mastra({
     agents: { calculatorAgent },
 });
