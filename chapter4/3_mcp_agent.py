@@ -11,7 +11,7 @@ from pydantic import BaseModel
 from typing import Annotated, Dict, List, Union
 
 from dotenv import load_dotenv
-load_dotenv("/workspaces/agent-book/.env")
+load_dotenv("../.env")
 
 mcp_client = None
 tools = None
@@ -103,28 +103,10 @@ async def main():
     question = "Bedrockで利用可能なモデルプロパイダーを教えて！"
     response = await graph.ainvoke(
         {"messages":
-            [
-                HumanMessage(question)
-            ]
+            [HumanMessage(question)]
         }
     )
     print(response)
     return response
 
 asyncio.run(main())
-
-
-# mcp_client = MultiServerMCPClient(
-#     {
-#         "file-system": {
-#             "command": "npx",
-#             "args": [
-#                 "-y",
-#                 "@modelcontextprotocol/server-filesystem",
-#                 "./"
-#             ],
-#             "transport": "stdio",
-#         },
-#         <中略>
-#     }
-# )

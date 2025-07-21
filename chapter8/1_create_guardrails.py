@@ -1,7 +1,7 @@
 import boto3
 import os
 from dotenv import load_dotenv
-load_dotenv("/workspaces/agent-book/.env")
+load_dotenv("../.env")
 
 def create_bedrock_attack_guardrail():
     bedrock_client = boto3.client('bedrock')

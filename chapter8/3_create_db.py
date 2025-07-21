@@ -2,7 +2,7 @@ from langchain.embeddings import init_embeddings
 from langchain_chroma import Chroma
 
 from dotenv import load_dotenv
-load_dotenv("/workspaces/agent-book/.env")
+load_dotenv("../.env")
 
 embedding = init_embeddings(
     model="amazon.titan-embed-text-v2:0",

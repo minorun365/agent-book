@@ -1,6 +1,6 @@
 from langfuse import get_client
 from dotenv import load_dotenv
-load_dotenv("/workspaces/agent-book/.env")
+load_dotenv("../.env")
 
 langfuse = get_client()
  

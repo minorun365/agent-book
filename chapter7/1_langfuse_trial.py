@@ -2,7 +2,7 @@ from langchain.chat_models import init_chat_model
 from langfuse.langchain import CallbackHandler
 
 from dotenv import load_dotenv
-load_dotenv("/workspaces/agent-book/.env")
+load_dotenv("../.env")
 
 # モデルの準備
 llm = init_chat_model(
