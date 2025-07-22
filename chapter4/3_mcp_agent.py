@@ -1,4 +1,5 @@
 
+
 import asyncio
 import operator
 import os
@@ -33,16 +34,10 @@ async def initialize_llm():
                 ],
                 "transport": "stdio",
             },
-            # AWS Documentation MCPサーバー
-            "awslabs.aws-documentation-mcp-server": {
-                "command": "uvx",
-                "args": [
-                    "awslabs.aws-documentation-mcp-server@latest",
-                ],
-                "env": {
-                    "AWS_DOCUMENTATION_PARTITION": "aws",
-                },
-                "transport": "stdio",
+            # AWS Knowledge MCPサーバー
+            "aws-knowledge-mcp-server": {
+                "url": "https://knowledge-mcp.global.api.aws",
+                "transport": "streamable_http",
             }
         }
     )
