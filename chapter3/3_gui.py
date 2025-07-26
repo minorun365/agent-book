@@ -1,6 +1,6 @@
 # 必要なライブラリをインポート
-import asyncio # 追加
 import feedparser
+import asyncio # 追加
 import streamlit as st # 追加
 from strands import Agent, tool
 from dotenv import load_dotenv

@@ -6,5 +6,5 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # エージェントを作成して起動
-agent = Agent()
+agent = Agent("us.anthropic.claude-sonnet-4-20250514-v1:0")
 agent("Strandsってどういう意味？")

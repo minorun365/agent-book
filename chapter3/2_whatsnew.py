@@ -30,7 +30,7 @@ def get_aws_updates(service_name: str) -> str:
 
 # エージェントを作成
 agent = Agent(
-    model="us.anthropic.claude-3-5-haiku-20241022-v1:0",
+    model="us.anthropic.claude-sonnet-4-20250514-v1:0",
     tools=[get_aws_updates]
 )
 
