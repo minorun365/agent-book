@@ -8,7 +8,7 @@ from langgraph.prebuilt import create_react_agent
 
 # 環境変数の読み込み
 from dotenv import load_dotenv
-load_dotenv("../.env")
+load_dotenv()
 
 # ReActエージェントの構築
 def create_agent(model : str, temperature: float):

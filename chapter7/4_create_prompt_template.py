@@ -1,6 +1,6 @@
 from langfuse import get_client
 from dotenv import load_dotenv
-load_dotenv("../.env")
+load_dotenv()
 
 langfuse = get_client()
  

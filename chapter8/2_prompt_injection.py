@@ -4,7 +4,7 @@ from langchain_core.messages import SystemMessage
 
 # .envファイルの読み込み
 from dotenv import load_dotenv
-load_dotenv("../.env")
+load_dotenv(
 
 # システムプロンプトを含むプロンプトテンプレート
 prompt = ChatPromptTemplate(

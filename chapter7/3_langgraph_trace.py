@@ -4,7 +4,7 @@ from langgraph.prebuilt import create_react_agent
 from langfuse.langchain import CallbackHandler
  
 from dotenv import load_dotenv
-load_dotenv("../.env")
+load_dotenv()
 
 # Web検索ツールの初期化
 web_search = TavilySearch(max_results=2, topic="general")
