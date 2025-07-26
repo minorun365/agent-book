@@ -1,8 +1,5 @@
 from strands import Agent, tool
 from strands_tools import calculator
-from dotenv import load_dotenv
-
-load_dotenv()
 
 # サブエージェント1を定義
 @tool
