@@ -13,7 +13,7 @@ from pydantic import BaseModel
 from typing import Annotated, Dict, List, Union
 
 from dotenv import load_dotenv
-load_dotenv("../.env")
+load_dotenv()
 
 web_search = TavilySearch(max_results=2)
 

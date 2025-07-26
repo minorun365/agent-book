@@ -10,7 +10,7 @@ from datetime import datetime
 
 # 環境変数の読み込み
 from dotenv import load_dotenv
-load_dotenv("../.env")
+load_dotenv()
 
 langfuse = get_client()
 

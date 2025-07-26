@@ -12,7 +12,7 @@ from langgraph.types import Command
 from langfuse.langchain import CallbackHandler
 
 from dotenv import load_dotenv
-load_dotenv("../.env")
+load_dotenv(
 
 # Embeddingインスタンスの生成
 embedding = init_embeddings(

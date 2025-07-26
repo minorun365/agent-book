@@ -3,7 +3,7 @@ from ragas.llms import LangchainLLMWrapper
 from ragas.metrics import AspectCritic
 from langchain.chat_models import init_chat_model
 from dotenv import load_dotenv
-load_dotenv("../.env")
+load_dotenv()
 
 user_input = "日本の首都はどこでしょうか？質問に端的に回答してください。"
 llm = init_chat_model(

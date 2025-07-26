@@ -12,7 +12,7 @@ from pydantic import BaseModel
 from typing import Annotated, Dict, List, Union
 
 from dotenv import load_dotenv
-load_dotenv("../.env")
+load_dotenv()
 
 mcp_client = None
 tools = None

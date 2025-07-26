@@ -2,7 +2,7 @@
 from langfuse import get_client
 from langchain_core.prompts import ChatPromptTemplate
 from dotenv import load_dotenv
-load_dotenv("../.env")
+load_dotenv()
 
 langfuse = get_client()
 prompt_template = langfuse.get_prompt("ai-agent", type="chat", label="latest")
