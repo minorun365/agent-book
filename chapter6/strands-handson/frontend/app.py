@@ -2,21 +2,21 @@ import asyncio, boto3
 import streamlit as st
 from agent_executor import invoke_agent
 
-# AgentCore APIクライアントを初期化
-agent_core = boto3.client('bedrock-agentcore')
+# UI表示
+st.title("AWSアカウント調査くん")
+st.write("あなたのAWSアカウント操作をAPIで代行するよ！")
 
 # セッションを初期化
 if 'messages' not in st.session_state:
     st.session_state.messages = []
 
-# UI表示
-st.title("AWSアカウント調査くん")
-st.write("あなたのAWSアカウント操作をAPIで代行するよ！")
-
 # メッセージ履歴を表示
 for message in st.session_state.messages:
     with st.chat_message(message["role"]):
         st.markdown(message["content"])
+
+# AgentCore APIクライアントを初期化
+agent_core = boto3.client('bedrock-agentcore')
 
 # ユーザー入力を表示
 if prompt := st.chat_input("メッセージを入力してね"):
