@@ -34,4 +34,6 @@ async def aws_kb_agent(query: str) -> str:
     """AWSナレッジエージェント"""
     if not _state["client"]:
         return "AWSナレッジMCPクライアントが利用不可です"
-    return await invoke_agent("AWSナレッジ", query, _state["client"], _create_agent, _state["queue"])
+    return await invoke_agent(
+        "AWSナレッジ", query, _state["client"], _create_agent, _state["queue"]
+    )

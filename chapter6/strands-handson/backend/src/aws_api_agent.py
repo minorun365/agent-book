@@ -38,4 +38,6 @@ async def aws_api_agent(query: str) -> str:
     """AWS APIエージェント"""
     if not _state["client"]:
         return "AWS API MCPクライアントが利用不可です"
-    return await invoke_agent("AWS API", query, _state["client"], _create_agent, _state["queue"])
+    return await invoke_agent(
+        "AWS API", query, _state["client"], _create_agent, _state["queue"]
+    )
