@@ -1,8 +1,7 @@
 import boto3
 import os
 from dotenv import load_dotenv
-load_dotenv(
-
+load_dotenv()
 def create_bedrock_attack_guardrail():
     bedrock_client = boto3.client('bedrock')
     aws_account_id = boto3.client('sts').get_caller_identity()["Account"]

@@ -12,7 +12,7 @@ from langgraph.types import Command
 from langfuse.langchain import CallbackHandler
 
 from dotenv import load_dotenv
-load_dotenv(
+load_dotenv()
 
 # Embeddingインスタンスの生成
 embedding = init_embeddings(
@@ -59,7 +59,7 @@ def check_tool_use(state: MessagesState) -> Command[Literal["tools"]]:
         report_text = tool_call["args"]["report_text"]
 
         response = bedrock_runtime_client.apply_guardrail(
-            guardrailIdentifier="5jg5dorta2d7",
+            guardrailIdentifier= #<GuardrailのID>,
             guardrailVersion="DRAFT",
             source="OUTPUT",
             content=[
@@ -116,4 +116,3 @@ messages = app.invoke(
     config={"callbacks": [CallbackHandler()]}
 )
 messages["messages"][-1].pretty_print()
-# app.get_graph().print_ascii()

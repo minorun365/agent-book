@@ -6,7 +6,7 @@ from langgraph.prebuilt import create_react_agent
 
 # 環境変数の読み込み
 from dotenv import load_dotenv
-load_dotenv(
+load_dotenv()
 
 # Web検索ツールの初期化
 # Tavily検索エンジンを使用してWeb検索機能を提供
