@@ -2,7 +2,7 @@ import asyncio, boto3
 import streamlit as st
 from agent_executor import invoke_agent
 
-# UI表示
+# タイトル表示
 st.title("AWSアカウント調査くん")
 st.write("あなたのAWSアカウント操作をAPIで代行するよ！")
 
