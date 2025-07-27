@@ -1,7 +1,7 @@
 import boto3
 
 from dotenv import load_dotenv
-load_dotenv(
+load_dotenv()
 
 def create_code_name_guardrail():
     bedrock_client = boto3.client("bedrock")
