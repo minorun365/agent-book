@@ -17,7 +17,7 @@ def extract_stream(data, container, state):
         stream_text(event, container, state)
 
 async def invoke_agent(prompt, container, agent_core):
-    """サブエージェントを呼び出し"""
+    """エージェントを呼び出し"""
     state = create_state()
     session_id = f"session_{str(uuid.uuid4())}"
     start_thinking(container, state)
