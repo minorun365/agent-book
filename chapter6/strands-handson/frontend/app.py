@@ -1,6 +1,12 @@
-import asyncio, boto3
+import os, asyncio, boto3
 import streamlit as st
 from agent_executor import invoke_agent
+
+# Streamlitシークレットを環境変数に設定
+os.environ['AWS_ACCESS_KEY_ID'] = st.secrets["AWS_ACCESS_KEY_ID"]
+os.environ['AWS_SECRET_ACCESS_KEY'] = st.secrets["AWS_SECRET_ACCESS_KEY"]
+os.environ['AWS_DEFAULT_REGION'] = st.secrets["AWS_DEFAULT_REGION"]
+os.environ['AGENT_RUNTIME_ARN'] = st.secrets["AGENT_RUNTIME_ARN"]
 
 # タイトル表示
 st.title("AWSアカウント調査くん")
