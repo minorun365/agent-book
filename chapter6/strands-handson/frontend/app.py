@@ -1,9 +1,8 @@
 import asyncio, boto3
 import streamlit as st
-from dotenv import load_dotenv
 from agent_executor import invoke_agent
 
-load_dotenv()
+# AgentCore APIクライアントを初期化
 agent_core = boto3.client('bedrock-agentcore')
 
 # セッションを初期化
