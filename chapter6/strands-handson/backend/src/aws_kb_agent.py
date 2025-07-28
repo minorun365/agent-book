@@ -1,39 +1,42 @@
 import asyncio
-from typing import Optional, Dict, Any
 from strands import Agent, tool
 from strands.tools.mcp.mcp_client import MCPClient
 from mcp.client.streamable_http import streamablehttp_client
 from .agent_executor import invoke_agent
 
-# エージェントの状態
-_state: Dict[str, Any] = {"client": None, "queue": None}
+# エージェントの状態を管理
+class KbAgentState:
+    def __init__(self):
+        self.client = None
+        self.queue = None
 
-def setup_kb_agent(queue: Optional[asyncio.Queue]):
+_state = KbAgentState()
+
+def setup_kb_agent(queue):
     """新規キューを受け取り、MCPクライアントを準備"""
-    global _state
-    _state["queue"] = queue
-    if queue and not _state["client"]:
+    _state.queue = queue
+    if queue and not _state.client:
         try:
-            _state["client"] = MCPClient(
+            _state.client = MCPClient(
                 lambda: streamablehttp_client("https://knowledge-mcp.global.api.aws")
             )
         except Exception:
-            _state["client"] = None
+            _state.client = None
 
 def _create_agent():
     """サブエージェントを作成"""
-    if not _state["client"]:
+    if not _state.client:
         return None
     return Agent(
         model="us.anthropic.claude-3-7-sonnet-20250219-v1:0",
-        tools=_state["client"].list_tools_sync()
+        tools=_state.client.list_tools_sync()
     )
 
 @tool
-async def aws_kb_agent(query: str) -> str:
+async def aws_kb_agent(query):
     """AWSナレッジエージェント"""
-    if not _state["client"]:
+    if not _state.client:
         return "AWSナレッジMCPクライアントが利用不可です"
     return await invoke_agent(
-        "AWSナレッジ", query, _state["client"], _create_agent, _state["queue"]
+        "AWSナレッジ", query, _state.client, _create_agent, _state.queue
     )

@@ -1,12 +1,11 @@
 import asyncio
-from typing import AsyncGenerator, Any, Dict
 from strands import Agent
 from bedrock_agentcore.runtime import BedrockAgentCoreApp
 from .aws_kb_agent import aws_kb_agent, setup_kb_agent
 from .aws_api_agent import aws_api_agent, setup_api_agent
 from .stream_handler import merge_streams
 
-def _create_orchestrator() -> Agent:
+def _create_orchestrator():
     """メインエージェントを作成"""
     return Agent(
         model="us.anthropic.claude-3-7-sonnet-20250219-v1:0",
@@ -22,7 +21,7 @@ app = BedrockAgentCoreApp()
 orchestrator = _create_orchestrator()
 
 @app.entrypoint
-async def invoke(payload: Dict[str, Any]) -> AsyncGenerator[Any, None]:
+async def invoke(payload):
     """呼び出し処理の開始地点"""
     prompt = payload.get("input", {}).get("prompt", "")
     

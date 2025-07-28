@@ -1,10 +1,6 @@
 import asyncio
-from typing import AsyncGenerator, Any, Optional
 
-async def send_event(
-        queue: Optional[asyncio.Queue], agent_name: str,
-        message: str, stage: str, tool_name: Optional[str] = None
-    ) -> None:
+async def send_event(queue, agent_name, message, stage, tool_name=None):
     """サブエージェントのステータスを送信"""
     if not queue:
         return
@@ -16,7 +12,7 @@ async def send_event(
         event["event"]["subAgentProgress"]["tool_name"] = tool_name
     await queue.put(event)
 
-async def merge_streams(stream, stream_queue: asyncio.Queue) -> AsyncGenerator[Any, None]:
+async def merge_streams(stream, stream_queue):
     """親子エージェントのストリームを統合"""
     main_chunk = asyncio.create_task(anext(stream, None))
     sub_chunk = asyncio.create_task(stream_queue.get())

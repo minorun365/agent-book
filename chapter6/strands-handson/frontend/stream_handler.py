@@ -1,7 +1,6 @@
 import streamlit as st
-from typing import Dict
 
-def create_state() -> Dict:
+def create_state():
     """新しい状態を作成"""
     return {
         "containers": [],
@@ -10,14 +9,14 @@ def create_state() -> Dict:
         "final_response": ""
     }
 
-def start_thinking(container, state: Dict):
+def start_thinking(container, state):
     """思考開始を表示"""
     with container:
         thinking_status = st.empty()
         thinking_status.status("エージェントが考え中", state="running")
     state["containers"].append((thinking_status, "エージェントが考え中"))
 
-def change_status(event, container, state: Dict):
+def change_status(event, container, state):
     """サブエージェントのステータスを更新"""
     progress_info = event["subAgentProgress"]
     message = progress_info.get("message")
@@ -40,7 +39,7 @@ def change_status(event, container, state: Dict):
     state["current_text"] = None
     state["final_response"] = ""
 
-def stream_text(event, container, state: Dict):
+def stream_text(event, container, state):
     """テキストをストリーミング表示"""
     delta = event["contentBlockDelta"]["delta"]
     if "text" not in delta:
@@ -67,7 +66,7 @@ def stream_text(event, container, state: Dict):
     if state["current_text"]:
         state["current_text"].markdown(state["final_response"])
 
-def close_display(state: Dict):
+def close_display(state):
     """表示の終了処理"""
     if state["current_text"]:
         state["current_text"].markdown(state["final_response"])
