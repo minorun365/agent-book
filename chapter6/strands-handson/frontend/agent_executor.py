@@ -15,6 +15,11 @@ def extract_stream(data, container, state):
         change_status(event, container, state)
     elif "contentBlockDelta" in event:
         stream_text(event, container, state)
+    elif "error" in data:
+        error_msg = data.get("error", "Unknown error")
+        error_type = data.get("error_type", "Unknown")
+        st.error(f"AgentCoreエラー: {error_msg}")
+        state["final_response"] = f"エラー: {error_msg}"
 
 async def invoke_agent(prompt, container, agent_core):
     """エージェントを呼び出し"""
