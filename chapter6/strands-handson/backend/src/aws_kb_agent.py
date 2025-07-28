@@ -11,6 +11,7 @@ class KbAgentState:
         self.queue = None
 
 _state = KbAgentState()
+LLM = "us.anthropic.claude-3-7-sonnet-20250219-v1:0"
 
 def setup_kb_agent(queue):
     """新規キューを受け取り、MCPクライアントを準備"""
@@ -18,7 +19,9 @@ def setup_kb_agent(queue):
     if queue and not _state.client:
         try:
             _state.client = MCPClient(
-                lambda: streamablehttp_client("https://knowledge-mcp.global.api.aws")
+                lambda: streamablehttp_client(
+                    "https://knowledge-mcp.global.api.aws"
+                )
             )
         except Exception:
             _state.client = None
@@ -28,7 +31,7 @@ def _create_agent():
     if not _state.client:
         return None
     return Agent(
-        model="us.anthropic.claude-3-7-sonnet-20250219-v1:0",
+        model=LLM,
         tools=_state.client.list_tools_sync()
     )
 
@@ -38,5 +41,6 @@ async def aws_kb_agent(query):
     if not _state.client:
         return "AWSナレッジMCPクライアントが利用不可です"
     return await invoke_agent(
-        "AWSナレッジ", query, _state.client, _create_agent, _state.queue
+        "AWSナレッジ", query, _state.client,
+        _create_agent, _state.queue
     )

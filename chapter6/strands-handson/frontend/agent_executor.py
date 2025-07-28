@@ -16,30 +16,35 @@ def extract_stream(data, container, state):
     elif "contentBlockDelta" in event:
         stream_text(event, container, state)
 
-async def invoke_agent(prompt, container, agent_core):
+async def invoke_agent(prompt, container, core):
     """エージェントを呼び出し"""
     state = create_state()
     session_id = f"session_{str(uuid.uuid4())}"
     start_thinking(container, state)
     
     payload = json.dumps({
-        "input": {"prompt": prompt, "session_id": session_id}
+        "input": {
+            "prompt": prompt, "session_id": session_id
+        }
     }).encode()
     
     try:
-        agent_response = agent_core.invoke_agent_runtime(
-            agentRuntimeArn=os.getenv("AGENT_RUNTIME_ARN"),
+        arn = os.getenv("AGENT_RUNTIME_ARN")
+        response = core.invoke_agent_runtime(
+            agentRuntimeArn=arn,
             runtimeSessionId=session_id,
             payload=payload,
             qualifier="DEFAULT"
         )
-        for line in agent_response["response"].iter_lines():
-            if not line or not line.decode("utf-8").startswith("data: "):
-                continue
-            try:
-                data = json.loads(line.decode("utf-8")[6:])
-                extract_stream(data, container, state)
-            except json.JSONDecodeError:
+        for line in response["response"].iter_lines():
+            decoded = line.decode("utf-8")
+            if line and decoded.startswith("data: "):
+                try:
+                    data = json.loads(decoded[6:])
+                    extract_stream(data, container, state)
+                except json.JSONDecodeError:
+                    continue
+            else:
                 continue
         
         close_display(state)
