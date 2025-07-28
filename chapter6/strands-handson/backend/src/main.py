@@ -8,7 +8,7 @@ from .stream_handler import merge_streams
 def _create_orchestrator():
     """メインエージェントを作成"""
     return Agent(
-        model="us.anthropic.claude-3-7-sonnet-20250219-v1:0",
+        model="us.anthropic.claude-sonnet-4-20250514-v1:0",
         tools=[aws_kb_agent, aws_api_agent],
         system_prompt="""2つのサブエージェントを使えます。
 1. AWSナレッジエージェント: AWSドキュメント等から情報を検索
