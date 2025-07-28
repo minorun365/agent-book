@@ -36,7 +36,7 @@ def change_status(event, container, state):
             display_state = "running"
         new_status_box.status(message, state=display_state)
     
-    status_info = (new_status_box, message)
+    status_info = (status, message)
     state["containers"].append(status_info)
     state["current_status"] = status_info
     state["current_text"] = None
@@ -55,6 +55,8 @@ def stream_text(event, container, state):
             if "思考中" in first_message:
                 status.status("思考中", state="complete")
         if state["current_status"]:
+            status, message = state["current_status"]
+            status.status(message, state="complete")
             status, message = state["current_status"]
             status.status(message, state="complete")
     
