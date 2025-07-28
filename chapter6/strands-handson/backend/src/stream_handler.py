@@ -1,49 +1,49 @@
 import asyncio
 
-async def send_event(queue, agent_name, message, stage, tool_name=None):
+async def send_event(queue, message, stage, tool_name=None):
     """サブエージェントのステータスを送信"""
     if not queue:
         return
     
-    event = {
-        "event": {"subAgentProgress": {"message": message, "stage": stage}}
-    }
+    progress = {"message": message, "stage": stage}
+    event = {"event": {"subAgentProgress": progress}}
     if tool_name:
-        event["event"]["subAgentProgress"]["tool_name"] = tool_name
+        progress["tool_name"] = tool_name
     await queue.put(event)
 
-async def merge_streams(stream, stream_queue):
+async def merge_streams(stream, queue):
     """親子エージェントのストリームを統合"""
-    main_chunk = asyncio.create_task(anext(stream, None))
-    sub_chunk = asyncio.create_task(stream_queue.get())
-    waiting_chunks = {main_chunk, sub_chunk}
+    create_task = asyncio.create_task
+    main = create_task(anext(stream, None))
+    sub = create_task(queue.get())
+    waiting = {main, sub}
     
     # チャンクの到着を待機
-    while waiting_chunks:
-        ready_chunks, waiting_chunks = await asyncio.wait(
-            waiting_chunks, return_when=asyncio.FIRST_COMPLETED
+    while waiting:
+        ready_chunks, waiting = await asyncio.wait(
+            waiting, return_when=asyncio.FIRST_COMPLETED
         )
         
         for ready_chunk in ready_chunks:
             # メインエージェントのチャンクを処理
-            if ready_chunk == main_chunk:
+            if ready_chunk == main:
                 event = ready_chunk.result()
                 if event is not None:
                     yield event
-                    main_chunk = asyncio.create_task(anext(stream, None))
-                    waiting_chunks.add(main_chunk)
+                    main = create_task(anext(stream, None))
+                    waiting.add(main)
                 else:
-                    main_chunk = None
+                    main = None
             
             # サブエージェントのチャンクを処理
-            elif ready_chunk == sub_chunk:
+            elif ready_chunk == sub:
                 try:
                     sub_event = ready_chunk.result()
                     yield sub_event
-                    sub_chunk = asyncio.create_task(stream_queue.get())
-                    waiting_chunks.add(sub_chunk)
+                    sub = create_task(queue.get())
+                    waiting.add(sub)
                 except Exception:
-                    sub_chunk = None
+                    sub = None
         
-        if main_chunk is None and stream_queue.empty():
+        if main is None and queue.empty():
             break

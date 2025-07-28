@@ -3,10 +3,12 @@ import streamlit as st
 from agent_executor import invoke_agent
 
 # Streamlitシークレットを環境変数に設定
-os.environ['AWS_ACCESS_KEY_ID'] = st.secrets["AWS_ACCESS_KEY_ID"]
-os.environ['AWS_SECRET_ACCESS_KEY'] = st.secrets["AWS_SECRET_ACCESS_KEY"]
-os.environ['AWS_DEFAULT_REGION'] = st.secrets["AWS_DEFAULT_REGION"]
-os.environ['AGENT_RUNTIME_ARN'] = st.secrets["AGENT_RUNTIME_ARN"]
+keys = [
+    'AWS_ACCESS_KEY_ID', 'AWS_SECRET_ACCESS_KEY',
+    'AWS_DEFAULT_REGION', 'AGENT_RUNTIME_ARN'
+]
+for key in keys:
+    os.environ[key] = st.secrets[key]
 
 # タイトル表示
 st.title("AWSアカウント調査くん")
@@ -28,19 +30,20 @@ agent_core = boto3.client('bedrock-agentcore')
 if prompt := st.chat_input("メッセージを入力してね"):
     with st.chat_message("user"):
         st.markdown(prompt)
-    st.session_state.messages.append({"role": "user", "content": prompt})
+    st.session_state.messages.append(
+        {"role": "user", "content": prompt}
+    )
     
     # エージェントの応答を表示
     with st.chat_message("assistant"):
         container = st.container()
         try:
-            final_response = asyncio.run(
+            response = asyncio.run(
                 invoke_agent(prompt, container, agent_core)
             )
-            if final_response:
+            if response:
                 st.session_state.messages.append(
-                    {"role": "assistant", "content": final_response}
+                    {"role": "assistant", "content": response}
                 )
         except Exception as e:
             st.error(f"エラーが発生しました: {e}")
-            st.error("AgentCore Runtimeの接続を確認してください。")

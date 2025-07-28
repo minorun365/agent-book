@@ -1,56 +1,58 @@
 import asyncio
 from .stream_handler import send_event
 
-async def _extract_stream(queue, agent_name, event, response_state):
+async def _extract(queue, agent, event, state):
     """ストリーミングから内容を抽出"""
     if isinstance(event, str):
-        response_state["text"] += event
+        state["text"] += event
         if queue:
-            await queue.put({
-                "event": {"contentBlockDelta": {"delta": {"text": event}}}
-            })
+            delta = {"delta": {"text": event}}
+            await queue.put(
+                {"event": {"contentBlockDelta": delta}}
+            )
     elif isinstance(event, dict) and "event" in event:
         event_data = event["event"]
         
         # ツール使用を検出
         if "contentBlockStart" in event_data:
-            start_data = event_data["contentBlockStart"].get("start", {})
+            block = event_data["contentBlockStart"]
+            start_data = block.get("start", {})
             if "toolUse" in start_data:
-                tool_name = start_data["toolUse"].get("name", "unknown")
-                await send_event(queue, agent_name, 
-                    f"サブエージェント「{agent_name}」がツール「{tool_name}」を実行中", 
-                    "tool_use", tool_name
+                tool_use = start_data["toolUse"]
+                tool = tool_use.get("name", "unknown")
+                await send_event(queue, 
+                    f"「{agent}」がツール「{tool}」を実行中", 
+                    "tool_use", tool
                 )
         
         # テキスト増分を処理
         if "contentBlockDelta" in event_data:
-            delta = event_data["contentBlockDelta"].get("delta", {})
+            block = event_data["contentBlockDelta"]
+            delta = block.get("delta", {})
             if "text" in delta:
-                response_state["text"] += delta["text"]
+                state["text"] += delta["text"]
         
         if queue:
             await queue.put(event)
 
-async def invoke_agent(agent_name, query, mcp_client, create_agent, queue):
+async def invoke(agent, query, mcp, create_agent, queue):
     """サブエージェントを呼び出し"""
-    response_state = {"text": ""}
+    state = {"text": ""}
     await send_event(
-        queue, agent_name,
-        f"サブエージェント「{agent_name}」が呼び出されました", "start"
+        queue, f"サブエージェント「{agent}」が呼び出されました", "start"
     )
     
     try:
         # MCPクライアントを起動しながら、エージェントを呼び出し
-        with mcp_client:
-            agent = create_agent()
-            async for event in agent.stream_async(query):
-                await _extract_stream(queue, agent_name, event, response_state)
+        with mcp:
+            agent_obj = create_agent()
+            async for event in agent_obj.stream_async(query):
+                await _extract(queue, agent, event, state)
         
         await send_event(
-            queue, agent_name,
-            f"サブエージェント「{agent_name}」が調査を完了しました", "complete"
+            queue, f"「{agent}」が対応を完了しました", "complete"
         )
-        return response_state["text"]
+        return state["text"]
     
     except Exception:
-        return f"{agent_name}エージェントの処理に失敗しました"
+        return f"{agent}エージェントの処理に失敗しました"

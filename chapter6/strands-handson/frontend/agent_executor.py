@@ -34,10 +34,11 @@ async def invoke_agent(prompt, container, agent_core):
             qualifier="DEFAULT"
         )
         for line in agent_response["response"].iter_lines():
-            if not line or not line.decode("utf-8").startswith("data: "):
+            decoded = line.decode("utf-8")
+            if not line or not decoded.startswith("data: "):
                 continue
             try:
-                data = json.loads(line.decode("utf-8")[6:])
+                data = json.loads(decoded[6:])
                 extract_stream(data, container, state)
             except json.JSONDecodeError:
                 continue

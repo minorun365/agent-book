@@ -5,7 +5,7 @@
 __pycache__
 
 # Streamlit
-secrets.toml
+.streamlit
 
 # Bedrock AgentCore
 .bedrock_agentcore.yaml

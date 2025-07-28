@@ -13,8 +13,8 @@ def start_thinking(container, state):
     """思考開始を表示"""
     with container:
         thinking_status = st.empty()
-        thinking_status.status("エージェントが考え中", state="running")
-    state["containers"].append((thinking_status, "エージェントが考え中"))
+        thinking_status.status("思考中", state="running")
+    state["containers"].append((thinking_status, "思考中"))
 
 def change_status(event, container, state):
     """サブエージェントのステータスを更新"""
@@ -24,13 +24,16 @@ def change_status(event, container, state):
     
     # 前のステータスを完了状態に
     if state["current_status"]:
-        status_box, original_message = state["current_status"]
-        status_box.status(original_message, state="complete")
+        status, old_message = state["current_status"]
+        status.status(old_message, state="complete")
     
     # 新しいステータス表示
     with container:
         new_status_box = st.empty()
-        display_state = "complete" if stage == "complete" else "running"
+        if stage == "complete":
+            display_state = "complete"
+        else:
+            display_state = "running"
         new_status_box.status(message, state=display_state)
     
     status_info = (new_status_box, message)
@@ -48,12 +51,12 @@ def stream_text(event, container, state):
     # テキスト出力開始時にステータスを完了に
     if state["current_text"] is None:
         if state["containers"]:
-            first_status, first_message = state["containers"][0]
-            if "考え中" in first_message:
-                first_status.status("エージェントが考え中", state="complete")
+            status, first_message = state["containers"][0]
+            if "思考中" in first_message:
+                status.status("思考中", state="complete")
         if state["current_status"]:
-            status_box, original_message = state["current_status"]
-            status_box.status(original_message, state="complete")
+            status, message = state["current_status"]
+            status.status(message, state="complete")
     
     # テキスト処理
     text = delta["text"]
@@ -64,11 +67,13 @@ def stream_text(event, container, state):
         with container:
             state["current_text"] = st.empty()
     if state["current_text"]:
-        state["current_text"].markdown(state["final_response"])
+        response = state["final_response"]
+        state["current_text"].markdown(response)
 
 def close_display(state):
     """表示の終了処理"""
     if state["current_text"]:
-        state["current_text"].markdown(state["final_response"])
-    for status_box, message in state["containers"]:
-        status_box.status(message, state="complete")
+        response = state["final_response"]
+        state["current_text"].markdown(response)
+    for status, message in state["containers"]:
+        status.status(message, state="complete")

@@ -10,10 +10,10 @@ def _create_orchestrator():
     return Agent(
         model="us.anthropic.claude-3-7-sonnet-20250219-v1:0",
         tools=[aws_kb_agent, aws_api_agent],
-        system_prompt="""あなたは2つのサブエージェントを活用するAWSエキスパートです：
-1. AWSナレッジエージェント: AWS公式ドキュメントから一般的な情報を検索
-2. AWS APIエージェント: AWSアカウント内のリソースをAPI経由で操作・確認
-AWS API操作を行う前に、必ずAWSナレッジエージェントで情報収集してください。"""
+        system_prompt="""2つのサブエージェントを使えます。
+1. AWSナレッジエージェント: AWSドキュメント等から情報を検索
+2. AWS APIエージェント: AWSアカウントをAPI操作
+API操作を行う前に、必ずAWSナレッジで情報収集してください。"""
     )
 
 # アプリケーションを初期化
@@ -26,14 +26,14 @@ async def invoke(payload):
     prompt = payload.get("input", {}).get("prompt", "")
     
     # サブエージェント用のキューを初期化
-    stream_queue = asyncio.Queue()
-    setup_kb_agent(stream_queue)
-    setup_api_agent(stream_queue)
+    queue = asyncio.Queue()
+    setup_kb_agent(queue)
+    setup_api_agent(queue)
     
     try:
         # メインエージェントを呼び出し、ストリームを統合
         stream = orchestrator.stream_async(prompt)
-        async for event in merge_streams(stream, stream_queue):
+        async for event in merge_streams(stream, queue):
             yield event
             
     finally:
