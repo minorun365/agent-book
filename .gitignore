@@ -1,8 +1,13 @@
 .env
 .claude
 
-# uv関連
-.venv
-.python-version
-pyproject.toml
-uv.lock
+# Python
+__pycache__
+
+# Streamlit
+.streamlit
+
+# Bedrock AgentCore
+.bedrock_agentcore.yaml
+.dockerignore
+Dockerfile
