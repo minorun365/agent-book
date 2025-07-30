@@ -34,7 +34,7 @@ def _create_agent():
     if not _state.client:
         return None
     return Agent(
-        model="us.anthropic.claude-sonnet-4-20250514-v1:0",
+        model="us.anthropic.claude-3-7-sonnet-20250219-v1:0",
         tools=_state.client.list_tools_sync()
     )
 
