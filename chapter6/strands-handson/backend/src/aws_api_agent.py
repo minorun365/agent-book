@@ -2,7 +2,7 @@ import asyncio, os
 from strands import Agent, tool
 from strands.tools.mcp import MCPClient
 from mcp import stdio_client, StdioServerParameters
-from .agent_executor import invoke
+from agent_executor import invoke
 
 # エージェントの状態を管理
 class ApiAgentState:

@@ -1,5 +1,5 @@
 import asyncio
-from .stream_handler import send_event
+from stream_handler import send_event
 
 async def _extract(queue, agent, event, state):
     """ストリーミングから内容を抽出"""

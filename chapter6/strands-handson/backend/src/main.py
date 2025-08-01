@@ -1,9 +1,9 @@
 import asyncio
 from strands import Agent
 from bedrock_agentcore.runtime import BedrockAgentCoreApp
-from .aws_kb_agent import aws_kb_agent, setup_kb_agent
-from .aws_api_agent import aws_api_agent, setup_api_agent
-from .stream_handler import merge_streams
+from aws_kb_agent import aws_kb_agent, setup_kb_agent
+from aws_api_agent import aws_api_agent, setup_api_agent
+from stream_handler import merge_streams
 
 def _create_orchestrator():
     """メインエージェントを作成"""
