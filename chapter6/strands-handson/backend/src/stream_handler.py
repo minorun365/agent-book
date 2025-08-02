@@ -8,7 +8,9 @@ async def send_event(queue, message, stage, tool_name=None):
     progress = {"message": message, "stage": stage}
     if tool_name:
         progress["tool_name"] = tool_name
-    await queue.put({"event": {"subAgentProgress": progress}})
+    await queue.put(
+        {"event": {"subAgentProgress": progress}}
+    )
 
 async def merge_streams(stream, queue):
     """親子エージェントのストリームを統合"""

@@ -1,7 +1,7 @@
 import asyncio
 from .stream_handler import send_event
 
-async def _extract(queue, agent, event, state):
+async def extract(queue, agent, event, state):
     """ストリーミングから内容を抽出"""
     if isinstance(event, str):
         state["text"] += event
@@ -21,8 +21,7 @@ async def _extract(queue, agent, event, state):
                 tool_use = start_data["toolUse"]
                 tool = tool_use.get("name", "unknown")
                 await send_event(queue, 
-                    f"「{agent}」がツール「{tool}」を実行中", 
-                    "tool_use", tool
+                    f"「{agent}」がツール「{tool}」を実行中", "tool_use", tool
                 )
         
         # テキスト増分を処理
@@ -47,7 +46,7 @@ async def invoke(agent, query, mcp, create_agent, queue):
         with mcp:
             agent_obj = create_agent()
             async for event in agent_obj.stream_async(query):
-                await _extract(queue, agent, event, state)
+                await extract(queue, agent, event, state)
         
         await send_event(
             queue, f"「{agent}」が対応を完了しました", "complete"

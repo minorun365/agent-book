@@ -1,7 +1,7 @@
-from dotenv import load_dotenv
 import os, asyncio, boto3
 import streamlit as st
-from agent_executor import invoke_agent
+from dotenv import load_dotenv
+from agent_executor import invoke
 
 load_dotenv(override=True)
 
@@ -34,7 +34,7 @@ if prompt := st.chat_input("メッセージを入力してね"):
         container = st.container()
         try:
             response = asyncio.run(
-                invoke_agent(prompt, container, agent_core)
+                invoke(prompt, container, agent_core)
             )
             if response:
                 st.session_state.messages.append(

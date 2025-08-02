@@ -58,11 +58,9 @@ def stream(event, container, state):
             status, message = state["current_status"]
             status.status(message, state="complete")
     
-    # テキスト処理
+    # テキストコンテナを更新
     text = delta["text"]
     state["final_response"] += text
-    
-    # テキストコンテナ更新
     if state["current_text"] is None:
         with container:
             state["current_text"] = st.empty()
