@@ -27,7 +27,7 @@ def change_status(event, container, state):
         status, old_message = state["current_status"]
         status.status(old_message, state="complete")
     
-    # 新しいステータス表示
+    # 新しいステータスを表示
     with container:
         new_status_box = st.empty()
         if stage == "complete":
@@ -36,6 +36,7 @@ def change_status(event, container, state):
             display_state = "running"
         new_status_box.status(message, state=display_state)
     
+    # ステータスを更新
     status_info = (new_status_box, message)
     state["containers"].append(status_info)
     state["current_status"] = status_info

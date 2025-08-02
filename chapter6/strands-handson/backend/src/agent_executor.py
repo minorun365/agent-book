@@ -47,7 +47,6 @@ async def invoke(agent, query, mcp, create_agent, queue):
             agent_obj = create_agent()
             async for event in agent_obj.stream_async(query):
                 await extract(queue, agent, event, state)
-        
         await send_event(
             queue, f"「{agent}」が対応を完了しました", "complete"
         )
