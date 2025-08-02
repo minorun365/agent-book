@@ -3,15 +3,17 @@ from strands import Agent
 from strands_tools import shell
 from bedrock_agentcore.runtime import BedrockAgentCoreApp
 from .aws_master import aws_master, setup_aws_master
-from .strands_master import strands_master, setup_strands_master
+from .api_master import api_master, setup_api_master
 from .stream_handler import merge_streams
 
 def _create_orchestrator():
     """監督者エージェントを作成"""
     return Agent(
         model="us.anthropic.claude-3-7-sonnet-20250219-v1:0",
-        tools=[aws_master, strands_master],
-        system_prompt="日本語で簡潔に回答してください。"
+        tools=[aws_master, api_master],
+        system_prompt="""2体のサブエージェントを使って日本語で応対して。
+1. AWSマスター：AWSドキュメントなどを参照できます。
+2. APIマスター：AWSアカウントをAPIで操作できます。"""
     )
 
 # アプリケーションを初期化
@@ -26,7 +28,7 @@ async def invoke(payload):
     # サブエージェント用のキューを初期化
     queue = asyncio.Queue()
     setup_aws_master(queue)
-    setup_strands_master(queue)
+    setup_api_master(queue)
     
     try:
         # 監督者エージェントを呼び出し、ストリームを統合
@@ -37,7 +39,7 @@ async def invoke(payload):
     finally:
         # キューをクリーンアップ
         setup_aws_master(None)
-        setup_strands_master(None)
+        setup_api_master(None)
 
 # AgentCoreランタイムを起動
 if __name__ == "__main__":

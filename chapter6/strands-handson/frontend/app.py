@@ -6,8 +6,8 @@ from agent_executor import invoke_agent
 load_dotenv(override=True)
 
 # タイトル表示
-st.title("AIエージェント開発コーチ")
-st.write("AWSとStrandsの最新ドキュメントからアドバイスします！")
+st.title("AWSの達人エージェント")
+st.write("AWSの技術質問や、あなたのアカウントの中身について答えます！")
 
 # セッションを初期化
 if 'messages' not in st.session_state:
