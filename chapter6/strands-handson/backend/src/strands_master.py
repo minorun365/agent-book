@@ -38,7 +38,7 @@ def _create_agent():
 async def strands_master(query):
     """Strandsマスターエージェント"""
     if not _state.client:
-        return "StrandsマスターMCPクライアントが利用不可です"
+        return "MCPクライアントが利用不可です"
     return await invoke(
         "Strandsマスター", query, _state.client,
         _create_agent, _state.queue

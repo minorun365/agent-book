@@ -1,12 +1,8 @@
-from dotenv import load_dotenv
 import os, json, uuid
 import streamlit as st
 from stream_handler import (
-    create_state, start_thinking, change_status,
-    stream_text, close_display
+    create_state, think, change_status, stream, finish
 )
-
-load_dotenv("../.env")
 
 def extract_stream(data, container, state):
     """ストリーミングから内容を抽出"""
@@ -17,7 +13,7 @@ def extract_stream(data, container, state):
     if "subAgentProgress" in event:
         change_status(event, container, state)
     elif "contentBlockDelta" in event:
-        stream_text(event, container, state)
+        stream(event, container, state)
     elif "error" in data:
         error_msg = data.get("error", "Unknown error")
         error_type = data.get("error_type", "Unknown")
@@ -28,16 +24,15 @@ async def invoke_agent(prompt, container, agent_core):
     """エージェントを呼び出し"""
     state = create_state()
     session_id = f"session_{str(uuid.uuid4())}"
-    start_thinking(container, state)
+    think(container, state)
     
     payload = json.dumps({
         "input": {"prompt": prompt, "session_id": session_id}
     }).encode()
     
     try:
-        agent_arn = "arn:aws:bedrock-agentcore:us-west-2:715841358122:runtime/v6-05ZL2O5dDw"
         agent_response = agent_core.invoke_agent_runtime(
-            agentRuntimeArn=agent_arn,
+            agentRuntimeArn=os.getenv("AGENT_RUNTIME_ARN"),
             runtimeSessionId=session_id,
             payload=payload,
             qualifier="DEFAULT"
@@ -52,7 +47,7 @@ async def invoke_agent(prompt, container, agent_core):
             except json.JSONDecodeError:
                 continue
         
-        close_display(state)
+        finish(state)
         return state["final_response"]
     
     except Exception as e:

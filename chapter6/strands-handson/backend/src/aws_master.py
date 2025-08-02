@@ -38,7 +38,7 @@ def _create_agent():
 async def aws_master(query):
     """AWSマスターエージェント"""
     if not _state.client:
-        return "AWSナレッジMCPクライアントが利用不可です"
+        return "MCPクライアントが利用不可です"
     return await invoke(
         "AWSマスター", query, _state.client,
         _create_agent, _state.queue

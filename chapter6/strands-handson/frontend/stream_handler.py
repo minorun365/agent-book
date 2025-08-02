@@ -9,7 +9,7 @@ def create_state():
         "final_response": ""
     }
 
-def start_thinking(container, state):
+def think(container, state):
     """思考開始を表示"""
     with container:
         thinking_status = st.empty()
@@ -42,7 +42,7 @@ def change_status(event, container, state):
     state["current_text"] = None
     state["final_response"] = ""
 
-def stream_text(event, container, state):
+def stream(event, container, state):
     """テキストをストリーミング表示"""
     delta = event["contentBlockDelta"]["delta"]
     if "text" not in delta:
@@ -70,7 +70,7 @@ def stream_text(event, container, state):
         response = state["final_response"]
         state["current_text"].markdown(response)
 
-def close_display(state):
+def finish(state):
     """表示の終了処理"""
     if state["current_text"]:
         response = state["final_response"]

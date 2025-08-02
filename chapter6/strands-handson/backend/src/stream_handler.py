@@ -6,10 +6,9 @@ async def send_event(queue, message, stage, tool_name=None):
         return
     
     progress = {"message": message, "stage": stage}
-    event = {"event": {"subAgentProgress": progress}}
     if tool_name:
         progress["tool_name"] = tool_name
-    await queue.put(event)
+    await queue.put({"event": {"subAgentProgress": progress}})
 
 async def merge_streams(stream, queue):
     """親子エージェントのストリームを統合"""
@@ -23,7 +22,6 @@ async def merge_streams(stream, queue):
         ready_chunks, waiting = await asyncio.wait(
             waiting, return_when=asyncio.FIRST_COMPLETED
         )
-        
         for ready_chunk in ready_chunks:
             # 監督者エージェントのチャンクを処理
             if ready_chunk == main:

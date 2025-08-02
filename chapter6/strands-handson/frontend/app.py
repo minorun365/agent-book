@@ -3,11 +3,11 @@ import os, asyncio, boto3
 import streamlit as st
 from agent_executor import invoke_agent
 
-load_dotenv("../.env")
+load_dotenv(override=True)
 
 # タイトル表示
-st.title("AWSアカウント調査くん")
-st.write("あなたのAWSアカウント操作をAPIで代行するよ！")
+st.title("AIエージェント開発コーチ")
+st.write("AWSとStrandsの最新ドキュメントからアドバイスします！")
 
 # セッションを初期化
 if 'messages' not in st.session_state:
