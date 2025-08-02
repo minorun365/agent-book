@@ -2,17 +2,17 @@ import asyncio
 from strands import Agent, tool
 from strands.tools.mcp.mcp_client import MCPClient
 from mcp.client.streamable_http import streamablehttp_client
-from agent_executor import invoke
+from .agent_executor import invoke
 
 # エージェントの状態を管理
-class KbAgentState:
+class AwsMasterState:
     def __init__(self):
         self.client = None
         self.queue = None
 
-_state = KbAgentState()
+_state = AwsMasterState()
 
-def setup_kb_agent(queue):
+def setup_aws_master(queue):
     """新規キューを受け取り、MCPクライアントを準備"""
     _state.queue = queue
     if queue and not _state.client:
@@ -35,11 +35,11 @@ def _create_agent():
     )
 
 @tool
-async def aws_kb_agent(query):
-    """AWSナレッジエージェント"""
+async def aws_master(query):
+    """AWSマスターエージェント"""
     if not _state.client:
         return "AWSナレッジMCPクライアントが利用不可です"
     return await invoke(
-        "AWSナレッジ", query, _state.client,
+        "AWSマスター", query, _state.client,
         _create_agent, _state.queue
     )

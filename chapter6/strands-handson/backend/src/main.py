@@ -1,19 +1,17 @@
 import asyncio
 from strands import Agent
+from strands_tools import shell
 from bedrock_agentcore.runtime import BedrockAgentCoreApp
-from aws_kb_agent import aws_kb_agent, setup_kb_agent
-from aws_api_agent import aws_api_agent, setup_api_agent
-from stream_handler import merge_streams
+from .aws_master import aws_master, setup_aws_master
+from .strands_master import strands_master, setup_strands_master
+from .stream_handler import merge_streams
 
 def _create_orchestrator():
-    """メインエージェントを作成"""
+    """監督者エージェントを作成"""
     return Agent(
         model="us.anthropic.claude-3-7-sonnet-20250219-v1:0",
-        tools=[aws_kb_agent, aws_api_agent],
-        system_prompt="""2つのサブエージェントを使えます。
-1. AWSナレッジエージェント: AWSドキュメント等から情報を検索
-2. AWS APIエージェント: AWSアカウントをAPI操作
-API操作を行う前に、必ずAWSナレッジで情報収集してください。"""
+        tools=[aws_master, strands_master],
+        system_prompt="日本語で簡潔に回答してください。"
     )
 
 # アプリケーションを初期化
@@ -27,19 +25,19 @@ async def invoke(payload):
     
     # サブエージェント用のキューを初期化
     queue = asyncio.Queue()
-    setup_kb_agent(queue)
-    setup_api_agent(queue)
+    setup_aws_master(queue)
+    setup_strands_master(queue)
     
     try:
-        # メインエージェントを呼び出し、ストリームを統合
+        # 監督者エージェントを呼び出し、ストリームを統合
         stream = orchestrator.stream_async(prompt)
         async for event in merge_streams(stream, queue):
             yield event
             
     finally:
         # キューをクリーンアップ
-        setup_kb_agent(None)
-        setup_api_agent(None)
+        setup_aws_master(None)
+        setup_strands_master(None)
 
 # AgentCoreランタイムを起動
 if __name__ == "__main__":

@@ -1,9 +1,12 @@
+from dotenv import load_dotenv
 import os, json, uuid
 import streamlit as st
 from stream_handler import (
     create_state, start_thinking, change_status,
     stream_text, close_display
 )
+
+load_dotenv("../.env")
 
 def extract_stream(data, container, state):
     """ストリーミングから内容を抽出"""
@@ -32,8 +35,9 @@ async def invoke_agent(prompt, container, agent_core):
     }).encode()
     
     try:
+        agent_arn = "arn:aws:bedrock-agentcore:us-west-2:715841358122:runtime/v6-05ZL2O5dDw"
         agent_response = agent_core.invoke_agent_runtime(
-            agentRuntimeArn=os.getenv("AGENT_RUNTIME_ARN"),
+            agentRuntimeArn=agent_arn,
             runtimeSessionId=session_id,
             payload=payload,
             qualifier="DEFAULT"

@@ -1,14 +1,9 @@
+from dotenv import load_dotenv
 import os, asyncio, boto3
 import streamlit as st
 from agent_executor import invoke_agent
 
-# Streamlitシークレットを環境変数に設定
-keys = [
-    'AWS_ACCESS_KEY_ID', 'AWS_SECRET_ACCESS_KEY',
-    'AWS_DEFAULT_REGION', 'AGENT_RUNTIME_ARN'
-]
-for key in keys:
-    os.environ[key] = st.secrets[key]
+load_dotenv("../.env")
 
 # タイトル表示
 st.title("AWSアカウント調査くん")

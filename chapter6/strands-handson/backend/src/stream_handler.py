@@ -25,7 +25,7 @@ async def merge_streams(stream, queue):
         )
         
         for ready_chunk in ready_chunks:
-            # メインエージェントのチャンクを処理
+            # 監督者エージェントのチャンクを処理
             if ready_chunk == main:
                 event = ready_chunk.result()
                 if event is not None:

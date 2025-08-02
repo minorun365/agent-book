@@ -1,29 +1,25 @@
-import asyncio, os
+import asyncio
 from strands import Agent, tool
 from strands.tools.mcp import MCPClient
 from mcp import stdio_client, StdioServerParameters
-from agent_executor import invoke
+from .agent_executor import invoke
 
 # エージェントの状態を管理
-class ApiAgentState:
+class StrandsMasterState:
     def __init__(self):
         self.client = None
         self.queue = None
 
-_state = ApiAgentState()
-MCP_MODULE = "awslabs.aws_api_mcp_server.server"
+_state = StrandsMasterState()
 
-def setup_api_agent(queue):
+def setup_strands_master(queue):
     """新規キューを受け取り、MCPクライアントを準備"""
     _state.queue = queue
     if queue and not _state.client:
         try:
-            env = os.environ.copy()
-            env["READ_OPERATIONS_ONLY"] = "true"
             _state.client = MCPClient(
                 lambda: stdio_client(StdioServerParameters(
-                    command="python",
-                    args=["-m", MCP_MODULE], env=env
+                    command="uvx", args=["strands-agents-mcp-server"]
                 ))
             )
         except Exception:
@@ -39,11 +35,11 @@ def _create_agent():
     )
 
 @tool
-async def aws_api_agent(query):
-    """AWS APIエージェント"""
+async def strands_master(query):
+    """Strandsマスターエージェント"""
     if not _state.client:
-        return "AWS API MCPクライアントが利用不可です"
+        return "StrandsマスターMCPクライアントが利用不可です"
     return await invoke(
-        "AWS API", query, _state.client,
+        "Strandsマスター", query, _state.client,
         _create_agent, _state.queue
     )
