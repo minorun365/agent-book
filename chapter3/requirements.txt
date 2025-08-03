@@ -1,0 +1,3 @@
+streamlit==1.47.1
+strands-agents==1.1.0
+feedparser==6.0.11
