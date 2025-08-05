@@ -116,6 +116,8 @@ if tool_use:
         messages=messages,
         toolConfig={"tools": tools}
     )
+    output = final_response["output"]["message"]["content"][0]["text"]
+    
     print("【推論2回目】")
     print("ユーザーの入力： （ツール実行結果）")
-    print("LLMの回答： ", final_response["output"]["message"]["content"][0]["text"])
+    print("LLMの回答： ", output)
