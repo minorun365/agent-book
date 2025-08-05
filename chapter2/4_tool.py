@@ -7,7 +7,7 @@ from dotenv import load_dotenv
 # .envファイルから環境変数を読み込む
 load_dotenv()
 
-# AWS SDK for Pythonで、Bedrock用のAPIクライアントを作成
+# Bedrock呼び出し用のAPIクライアントを作成
 client = boto3.client("bedrock-runtime")
 
 input = "2025年7月の祝日はいつ？"
