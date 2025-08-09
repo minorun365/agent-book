@@ -16,7 +16,7 @@ from langgraph.graph import add_messages
 
 # .envから環境変数ファイルを読みだし
 from dotenv import load_dotenv
-load_dotenv()
+load_dotenv(override=True)
 
 # ツールの定義
 # Web検索ツール
