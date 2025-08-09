@@ -67,34 +67,40 @@ def invoke_llm(messages: list[BaseMessage]) -> AIMessage:
 def use_tool(tool_call):
     tool = tools_by_name[tool_call["name"]]
     observation = tool.invoke(tool_call["args"])
-    
+
     return ToolMessage(content=observation, tool_call_id=tool_call["id"])
 
 # ユーザーにツール実行承認を求める
 def ask_human(tool_call: ToolCall):
-    tool_data = {"name": tool_call["name"]}
-    if tool_call["name"] == web_search.name:
-        args = f'* ツール名\n  * {tool_call["name"]}\n'
+    tool_name = tool_call["name"]
+    tool_args = tool_call["args"]
+    tool_data = {"name": tool_name}
+    if tool_name == web_search.name:
+        args =  f'* ツール名\n'
+        args += f'  * {tool_name}\n'
         args += "* 引数\n"
-        for key, value in tool_call["args"].items():
-          args += f"  * {key}\n    * {value}\n"
+        for key, value in tool_args.items():
+            args += f'  * {key}\n'
+            args += f'    * {value}\n'
 
         tool_data["args"] = args
-    elif tool_call["name"] == write_file.name:
-        args = f'* ツール名\n  * {tool_call["name"]}\n'
-        args += f'* 保存ファイル名\n  * {tool_call["args"]["file_path"]}'
-        tool_data["html"] = tool_call["args"]["text"]
+    elif tool_name == write_file.name:
+        args =  f'* ツール名\n'
+        args += f'  * {tool_name}\n'
+        args += f'* 保存ファイル名\n'
+        args += f'  * {tool_args["file_path"]}'
+        tool_data["html"] = tool_args["text"]
     tool_data["args"] = args
 
     feedback = interrupt(tool_data)
 
-    if feedback == "APPROVE": # ユーザがツール利用を承認したとき
+    if feedback == "APPROVE": # ユーザーがツール利用を承認したとき
         return tool_call
     
-    # ユーザがツール利用を承認しなかったとき
+    # ユーザーがツール利用を承認しなかったとき
     return ToolMessage(
-        content="ユーザによってツール利用が拒否されました。そのため処理を終了してください。", 
-        name=tool_call["name"], 
+        content="ユーザーがツール利用を拒否したため、処理を終了してください。", 
+        name=tool_name, 
         tool_call_id=tool_call["id"]
     )
     
@@ -125,7 +131,7 @@ def agent(messages):
         tool_futures = []
         for tool_call in approve_tools:
             future = use_tool(tool_call)   # 非同期実行を開始
-            tool_futures.append(future)     # 後でまとめて結果を取り出すために保存
+            tool_futures.append(future)
 
         # Future が完了するのを待って結果だけを集める
         tool_use_results = []
@@ -134,7 +140,10 @@ def agent(messages):
             tool_use_results.append(result)
 
         # メッセージリストに追加
-        messages = add_messages(messages, [llm_response, *tool_use_results, *tool_results])
+        messages = add_messages(
+            messages,
+            [llm_response, *tool_use_results, *tool_results]
+        )
 
         # モデルを再度呼び出し
         llm_response = invoke_llm(messages).result()

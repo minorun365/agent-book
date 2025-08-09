@@ -1,6 +1,5 @@
 import uuid
-import streamlit as st 
-import streamlit.components.v1 as components
+import streamlit as st
 from langchain_core.messages import HumanMessage
 from langgraph.types import Command
 
@@ -30,34 +29,32 @@ init_session_state()
 
 def run_agent(input_data):
     """エージェントを実行し、結果を処理する"""
-    try:
-        # AIエージェント呼び出しに使うconfigurationの作成
-        config = {"configurable": {"thread_id": st.session_state.thread_id}}
+    # AIエージェント呼び出しに使うconfigurationの作成
+    config = {"configurable": 
+        {"thread_id": st.session_state.thread_id}
+    }
         
-        # 結果を処理
-        with st.spinner("処理中...", show_time=True):
-            for chunk in agent.stream(input_data, stream_mode="updates", config=config):
-                for task_name, result in chunk.items():
-                    # interruptの場合
-                    if task_name == "__interrupt__":
-                        st.session_state.tool_info = result[0].value
-                        st.session_state.waiting_for_approval = True
-                    elif task_name == "agent":
-                        st.session_state.final_result = result.content
-                    # AIMessageの場合
-                    elif task_name == "invoke_llm":
-                        if isinstance(chunk["invoke_llm"].content, list):
-                            for content in result.content:
-                                if content["type"] == "text":
-                                    st.session_state.messages.append({"role": "assistant", "content": content["text"]})
-                    # ツール実行の場合
-                    elif task_name == "use_tool":
-                        st.session_state.messages.append({"role": "assistant", "content": "ツールを実行！"})
-                            
-            st.rerun()                
-    
-    except Exception as e:
-        st.error(f"エージェント実行中にエラーが発生しました: {e}")
+    # 結果を処理
+    with st.spinner("処理中...", show_time=True):
+        for chunk in agent.stream(input_data, stream_mode="updates", config=config):
+            for task_name, result in chunk.items():
+                # interruptの場合
+                if task_name == "__interrupt__":
+                    st.session_state.tool_info = result[0].value
+                    st.session_state.waiting_for_approval = True
+                # 最終回答の場合
+                elif task_name == "agent":
+                    st.session_state.final_result = result.content
+                # LLM推論の場合
+                elif task_name == "invoke_llm":
+                    if isinstance(chunk["invoke_llm"].content, list):
+                        for content in result.content:
+                            if content["type"] == "text":
+                                st.session_state.messages.append({"role": "assistant", "content": content["text"]})
+                # ツール実行の場合
+                elif task_name == "use_tool":
+                    st.session_state.messages.append({"role": "assistant", "content": "ツールを実行！"})                            
+        st.rerun()                
 
 def feedback():
     """フィードバックを取得し、エージェントに通知する関数"""       
@@ -65,11 +62,11 @@ def feedback():
 
     feedback_result = None
     with approve_column:
-        if st.button("APPROVE", key="approve_button", use_container_width=True):
+        if st.button("APPROVE", width="stretch"):
             st.session_state.waiting_for_approval = False
             feedback_result = "APPROVE"
     with deny_column:
-        if st.button("DENY", key="deny_button", use_container_width=True):
+        if st.button("DENY", width="stretch"):
             st.session_state.waiting_for_approval = False
             feedback_result = "DENY"
                 
@@ -88,10 +85,12 @@ def app():
             st.chat_message("assistant").write(msg["content"])
             
     # ツール承認の確認
-    if st.session_state.waiting_for_approval and st.session_state.tool_info:
+    if st.session_state.waiting_for_approval \
+       and st.session_state.tool_info:
         st.info(st.session_state.tool_info["args"])
         if st.session_state.tool_info["name"] == "write_file":
-            components.html(st.session_state.tool_info["html"], height=400, scrolling=True)
+            with st.container(height=400):
+                st.html(st.session_state.tool_info["html"], width="stretch")
         feedback_result = feedback()
         if feedback_result:
             st.chat_message("user").write(feedback_result)
@@ -100,7 +99,8 @@ def app():
             st.rerun()
 
     # 最終結果の表示
-    if st.session_state.final_result and not st.session_state.waiting_for_approval:
+    if st.session_state.final_result \
+       and not st.session_state.waiting_for_approval:
         st.subheader("最終結果")
         st.success(st.session_state.final_result)
 

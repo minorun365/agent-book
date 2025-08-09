@@ -57,17 +57,12 @@ builder.add_node("tools", ToolNode(tools))
 # ルーティング関数：ツールノードかENDノードへ遷移する
 def route_node(state: AgentState) -> Union[str]:
     last_message = state.messages[-1]  
-    if not isinstance(last_message, AIMessage):
-        raise ValueError("「AIMessage」以外のメッセージです。遷移が不正な可能性があります。")
     if not last_message.tool_calls:
         return END # ENDノードへ遷移
     return "tools" # ツールノードへ遷移
 
 builder.add_edge(START, "agent")
-builder.add_conditional_edges(
-    "agent",
-    route_node,
-)
+builder.add_conditional_edges("agent", route_node)
 builder.add_edge("tools", "agent")
 
 graph = builder.compile()
@@ -76,9 +71,7 @@ async def main():
     question = "生成AIについて教えて！！"
     response = await graph.ainvoke(
         {"messages":
-            [
-                HumanMessage(question)
-            ]
+            [HumanMessage(question)]
         }
     )
     return response
