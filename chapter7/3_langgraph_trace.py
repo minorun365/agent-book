@@ -13,7 +13,7 @@ web_search = TavilySearch(max_results=2, topic="general")
 tools = [web_search]
 # モデルの準備
 llm = init_chat_model(
-    model="us.anthropic.claude-sonnet-4-20250514-v1:0",
+    model="us.anthropic.claude-3-7-sonnet-20250219-v1:0",
     model_provider="bedrock_converse",
 )
 # ReActエージェントの構築
