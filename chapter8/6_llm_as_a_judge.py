@@ -7,7 +7,7 @@ load_dotenv()
 
 user_input = "日本の首都はどこでしょうか？質問に端的に回答してください。"
 llm = init_chat_model(
-    model="us.anthropic.claude-sonnet-4-20250514-v1:0",
+    model="us.anthropic.claude-3-7-sonnet-20250219-v1:0",
     model_provider="bedrock_converse",
 )
 response = llm.invoke(("human", user_input)).content

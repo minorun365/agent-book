@@ -46,7 +46,7 @@ async def initialize_llm():
     
     # LLMの初期化
     llm_with_tools = init_chat_model(
-        model="us.anthropic.claude-sonnet-4-20250514-v1:0",
+        model="us.anthropic.claude-3-7-sonnet-20250219-v1:0",
         model_provider="bedrock_converse",
     ).bind_tools(tools)
 

@@ -16,7 +16,7 @@ from langgraph.graph import add_messages
 
 # .envから環境変数ファイルを読みだし
 from dotenv import load_dotenv
-load_dotenv()
+load_dotenv(override=True)
 
 # ツールの定義
 # Web検索ツール
@@ -38,7 +38,7 @@ cfg = Config(
     read_timeout=300,
 )
 llm_with_tools = init_chat_model(
-    model="us.anthropic.claude-sonnet-4-20250514-v1:0",
+    model="us.anthropic.claude-3-7-sonnet-20250219-v1:0",
     model_provider="bedrock_converse",
     config=cfg,
 ).bind_tools(tools)
