@@ -1,5 +1,5 @@
-import {Agent} from "@mastra/core/agent";
-import {getBedrockModel} from "../../../lib/aws-config";
+import { Agent } from "@mastra/core/agent";
+import { getBedrockModel } from "../../../lib/aws-config";
 
 const model = await getBedrockModel();
 
