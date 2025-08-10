@@ -1,6 +1,7 @@
+// クライアントコンポーネントの宣言
 "use client";
 
-import {WorkflowFormData} from '../types/workflow';
+import { WorkflowFormData } from "../types/workflow";
 
 // WorkflowFormコンポーネントのProps（引数）の型定義
 interface WorkflowFormProps {
@@ -12,11 +13,11 @@ interface WorkflowFormProps {
 
 // WorkflowフォームのUIコンポーネント
 export const WorkflowForm = ({
-                               formData,
-                               isLoading,
-                               onInputChange,
-                               onSubmit
-                             }: WorkflowFormProps) => {
+  formData,
+  isLoading,
+  onInputChange,
+  onSubmit
+}: WorkflowFormProps) => {
   // 入力項目に不足がないかチェック
   const isFormValid = formData.query && formData.owner && formData.repo;
   return (
