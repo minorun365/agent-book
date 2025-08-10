@@ -3,7 +3,6 @@ import {confluenceSearchPagesTool, confluenceGetPageTool} from "../tools/conflue
 import {assistantAgent} from "../agents/assistantAgent";
 import {z} from "zod";
 
-
 // ツールからステップを作成
 const confluenceSearchPagesStep = createStep(confluenceSearchPagesTool);
 const confluenceGetPageStep = createStep(confluenceGetPageTool);
@@ -52,7 +51,6 @@ CQLの基本的な構文：
 
 CQLクエリ:`;
 
-
         try {
           const result = await assistantAgent.generate(prompt);
           const cql = result.text.trim();
@@ -93,7 +91,6 @@ CQLクエリ:`;
           throw new Error("検索結果が見つかりませんでした。");
         }
 
-
         // 最初のページを取得
         const firstPage = pages[0];
         return {
@@ -129,7 +126,6 @@ CQLクエリ:`;
         // ワークフローの最初に設定されたデータ
         const initData = getInitData();
 
-
         if (error || !page || !page.content) {
           return {
             prompt: "ページの内容が取得できませんでした。",
@@ -141,14 +137,11 @@ CQLクエリ:`;
         // エージェントへの指示を作成
         const prompt = `以下のConfluenceページの内容に基づいて、ユーザーの質問に答えてください。
 
-
 ユーザーの質問: ${initData.query}
-
 
 ページタイトル: ${page.title}
 ページ内容:
 ${page.content}
-
 
 回答は簡潔で分かりやすく、必要に応じて箇条書きを使用してください。`;
         return {

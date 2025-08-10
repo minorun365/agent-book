@@ -82,6 +82,7 @@ export const confluenceSearchPagesTool = createTool({
     }
   },
 });
+
 // Confluenceページ詳細取得ツール
 export const confluenceGetPageTool = createTool({
   id: "confluence-get-page",
@@ -107,7 +108,6 @@ export const confluenceGetPageTool = createTool({
     // 入力パラメータからページIDと展開オプションを取得
     const params = new URLSearchParams();
     if (context.expand) params.append("expand", context.expand);
-
 
     try {
       const endpoint = `/content/${context.pageId}${params.toString() ? `?${params.toString()}` : ""}`;
