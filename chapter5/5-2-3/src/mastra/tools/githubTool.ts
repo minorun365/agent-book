@@ -1,8 +1,7 @@
-import {createTool} from "@mastra/core/tools";
-import {z} from "zod";
+import { createTool } from "@mastra/core/tools";
+import { z } from "zod";
 // GitHub APIを実行するためのトークンは環境変数から取得
 const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
-
 
 export const githubCreateIssueTool = createTool({
   id: "githubCreateIssue",
@@ -29,12 +28,11 @@ export const githubCreateIssueTool = createTool({
     })),
     errors: z.array(z.string()).optional(),
   }),
-  execute: async ({context}) => {
+  execute: async ({ context }) => {
     // inputSchemaに従ったデータ取得
     const {owner, repo, issues} = context;
     const createdIssues: Array<{ issueNumber?: number; issueUrl?: string; title: string }> = [];
     const errors: string[] = [];
-
 
     for (const issue of issues) {
       try {

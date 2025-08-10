@@ -1,12 +1,12 @@
-import {createWorkflow, createStep} from "@mastra/core/workflows";
+import { createWorkflow, createStep } from "@mastra/core/workflows";
 import {
   confluenceSearchPagesTool,
   confluenceGetPageTool,
 } from "../tools/confluenceTool";
 // 作成したツールをimport
-import {githubCreateIssueTool} from "../tools/githubTool";
-import {assistantAgent} from "../agents/assistantAgent";
-import {z} from "zod";
+import { githubCreateIssueTool } from "../tools/githubTool";
+import { assistantAgent } from "../agents/assistantAgent";
+import { z } from "zod";
 
 
 const confluenceSearchPagesStep = createStep(confluenceSearchPagesTool);
@@ -42,7 +42,7 @@ export const handsonWorkflow = createWorkflow({
         query: z.string(), owner: z.string(), repo: z.string(),
       }),
       outputSchema: z.object({cql: z.string()}),
-      execute: async ({inputData}) => {
+      execute: async ({ inputData }) => {
         const prompt = `
 以下の自然言語の検索要求をConfluence CQL (Confluence Query Language)に変換してください。
 CQLの基本的な構文：
@@ -52,9 +52,7 @@ CQLの基本的な構文：
 - type = page：ページのみ検索
 - created >= "2024-01-01"：日付フィルタ
 
-
 検索要求: ${inputData.query}
-
 
 重要：
 - 単純な単語検索の場合は、text ~ "単語" の形式を使用
@@ -62,17 +60,15 @@ CQLの基本的な構文：
 - 日本語の検索語もそのまま使用可能
 - レスポンスはCQLクエリのみを返してください
 
-
 CQLクエリ:`;
-
 
         try {
           const result = await assistantAgent.generate(prompt);
           const cql = result.text.trim();
-          return {cql};
+          return { cql };
         } catch (error) {
           const fallbackCql = `text ~ "${inputData.query}"`;
-          return {cql: fallbackCql};
+          return { cql: fallbackCql };
         }
       },
     })
@@ -96,16 +92,15 @@ CQLクエリ:`;
         pageId: z.string(),
         expand: z.string().optional(),
       }),
-      execute: async ({inputData}) => {
+      execute: async ({ inputData }) => {
         // ページの一覧取得
-        const {pages, error} = inputData;
+        const { pages, error } = inputData;
         if (error) {
           throw new Error(`検索エラー: ${error}`);
         }
         if (!pages || pages.length === 0) {
           throw new Error("検索結果が見つかりませんでした。");
         }
-
 
         // 最初のページを取得
         const firstPage = pages[0];
@@ -125,11 +120,11 @@ CQLクエリ:`;
       inputSchema: confluenceGetPageTool.outputSchema,
       // GitHub Issues作成ツールのinputSchemaをそのまま指定
       outputSchema: githubCreateIssueTool.inputSchema,
-      execute: async ({inputData, getInitData}) => {
+      execute: async ({ inputData, getInitData }) => {
         // 前のステップから受け渡されるConfluenceのページ情報
-        const {page, error} = inputData;
+        const { page, error } = inputData;
         // GitHubのリポジトリ情報はワークフローの初期データから取得
-        const {owner, repo, query} = getInitData();
+        const { owner, repo, query } = getInitData();
 
 
         // いずれかの情報が取れない場合はエラーメッセージを送信
@@ -168,6 +163,7 @@ ${page.content}
 - \`\`\`jsonのようなコードブロックは不要
 - 2つIssueを作成
 - 曖昧な部分は「要確認」として記載`;
+
         try {
           const result = await assistantAgent.generate(analysisPrompt, {
             output: outputSchema, // エージェントからの出力フォーマットを指定
