@@ -1,7 +1,7 @@
-import {createWorkflow, createStep} from "@mastra/core/workflows";
-import {confluenceSearchPagesTool, confluenceGetPageTool} from "../tools/confluenceTool";
-import {assistantAgent} from "../agents/assistantAgent";
-import {z} from "zod";
+import { createWorkflow, createStep } from "@mastra/core/workflows";
+import { confluenceSearchPagesTool, confluenceGetPageTool } from "../tools/confluenceTool";
+import { assistantAgent } from "../agents/assistantAgent";
+import { z } from "zod";
 
 // ツールからステップを作成
 const confluenceSearchPagesStep = createStep(confluenceSearchPagesTool);

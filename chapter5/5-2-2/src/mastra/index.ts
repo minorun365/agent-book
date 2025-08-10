@@ -5,7 +5,7 @@ import { handsonWorkflow } from "./workflows/handson";
 
 
 export const mastra = new Mastra({
-    agents: { assistantAgent },
-    // 作成したワークフローを追加
-    workflows: { handsonWorkflow },
+  agents: { assistantAgent },
+  // 作成したワークフローを追加
+  workflows: { handsonWorkflow },
 });
