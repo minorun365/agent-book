@@ -1,0 +1,27 @@
+version: 1
+applications:
+  - frontend:
+      phases:
+        # ビルド前の準備フェーズ
+        preBuild:
+          commands:
+            # Node.jsのバージョンを22に設定
+            - nvm install 22
+            - nvm use 22
+            # 依存ライブラリのインストール
+            - npm ci
+            # AWS Amplifyのバックエンドをデプロイ
+            - npx ampx pipeline-deploy --branch $AWS_BRANCH --app-id $AWS_APP_ID
+        build:
+          commands:
+            # 環境変数の設定
+            - env | grep -e CONFLUENCE_BASE_URL -e CONFLUENCE_API_TOKEN -e CONFLUENCE_USER_EMAIL -e GITHUB_TOKEN >> .env
+            - npm run build
+      artifacts:
+        baseDirectory: .next
+        files:
+          - '**/*'
+      cache:
+        paths:
+          - node_modules/**/*
+
