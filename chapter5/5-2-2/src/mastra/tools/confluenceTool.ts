@@ -1,6 +1,6 @@
 // 必要なモジュールをインポート
-import {createTool} from "@mastra/core/tools";
-import {z} from "zod";
+import { createTool } from "@mastra/core/tools";
+import { z } from "zod";
 
 // 環境変数からAPIキーなどを取得
 const CONFLUENCE_BASE_URL = process.env.CONFLUENCE_BASE_URL || "";
@@ -63,7 +63,7 @@ export const confluenceSearchPagesTool = createTool({
     total: z.number().describe("検索結果の総数"),
     error: z.string().optional().describe("エラーメッセージ"),
   }),
-  execute: async ({context}) => {
+  execute: async ({ context }) => {
     // CQLクエリをURLエンコードしてパラメータに追加
     const params = new URLSearchParams();
     params.append("cql", context.cql);
@@ -104,7 +104,7 @@ export const confluenceGetPageTool = createTool({
     }),
     error: z.string().optional().describe("エラーメッセージ"),
   }),
-  execute: async ({context}) => {
+  execute: async ({ context }) => {
     // 入力パラメータからページIDと展開オプションを取得
     const params = new URLSearchParams();
     if (context.expand) params.append("expand", context.expand);
@@ -124,7 +124,7 @@ export const confluenceGetPageTool = createTool({
     } catch (error) {
       return {
         error: String(error),
-        page: {id: '', title: '', url: '', content: undefined,}
+        page: { id: '', title: '', url: '', content: undefined, }
       };
     }
   },

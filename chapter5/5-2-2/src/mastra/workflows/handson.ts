@@ -28,7 +28,7 @@ export const handsonWorkflow = createWorkflow({
         query: z.string(),
       }),
       outputSchema: z.object({cql: z.string()}),
-      execute: async ({inputData}) => {
+      execute: async ({ inputData }) => {
         const prompt = `
 以下の自然言語の検索要求をConfluence CQL (Confluence Query Language)に変換してください。
 CQLの基本的な構文：
@@ -54,10 +54,10 @@ CQLクエリ:`;
         try {
           const result = await assistantAgent.generate(prompt);
           const cql = result.text.trim();
-          return {cql};
+          return { cql };
         } catch (error) {
           const fallbackCql = `text ~ "${inputData.query}"`;
-          return {cql: fallbackCql};
+          return { cql: fallbackCql };
         }
       },
     })
@@ -81,7 +81,7 @@ CQLクエリ:`;
         pageId: z.string(),
         expand: z.string().optional(),
       }),
-      execute: async ({inputData}) => {
+      execute: async ({ inputData }) => {
         // ページの一覧取得
         const {pages, error} = inputData;
         if (error) {
@@ -120,9 +120,9 @@ CQLクエリ:`;
         pageTitle: z.string(),
         pageUrl: z.string(),
       }),
-      execute: async ({inputData, getInitData}) => {
+      execute: async ({ inputData, getInitData }) => {
         // 一つ前のステップのoutpuSchemaから渡されたデータ
-        const {page, error} = inputData;
+        const { page, error } = inputData;
         // ワークフローの最初に設定されたデータ
         const initData = getInitData();
 
@@ -164,7 +164,7 @@ ${page.content}
       }),
       // ワークフローのoutputSchemaと一致させる
       outputSchema: z.object({text: z.string(),}),
-      execute: async ({inputData}) => {
+      execute: async ({ inputData }) => {
         try {
           // エージェントを実行しテキスト生成結果を受け取る
           const result = await assistantAgent.generate(inputData.prompt);
@@ -172,7 +172,7 @@ ${page.content}
             text: result.text,
           };
         } catch (error) {
-          return {text: "エラーが発生しました: " + String(error),};
+          return { text: "エラーが発生しました: " + String(error), };
         }
       },
     })
