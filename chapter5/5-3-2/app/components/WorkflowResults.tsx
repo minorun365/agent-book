@@ -1,4 +1,4 @@
-import {WorkflowResult} from '../types/workflow';
+import { WorkflowResult } from "../types/workflow";
 
 // WorkflowResultsコンポーネントのProps（引数）の型定義
 interface WorkflowResultsProps {
@@ -8,10 +8,8 @@ interface WorkflowResultsProps {
 export const WorkflowResults = ({result}: WorkflowResultsProps) => {
   if (!result) return null;
 
-
   // 実行中かどうかを判定
-  const isRunning = result.message.includes('実行中');
-
+  const isRunning = result.message.includes("実行中");
 
   return (
     <div className="mt-8 border-t-2 border-gray-100 pt-8">
@@ -24,10 +22,10 @@ export const WorkflowResults = ({result}: WorkflowResultsProps) => {
       <div className={`
        p-6 rounded-2xl mb-6 transition-all duration-300 shadow-lg
        ${isRunning
-        ? 'bg-gradient-to-r from-gray-50 to-gray-100 border-2 border-gray-300'
+        ? "bg-gradient-to-r from-gray-50 to-gray-100 border-2 border-gray-300"
         : result.success
-          ? 'bg-gradient-to-r from-green-50 to-emerald-50 border-2 border-green-300'
-          : 'bg-gradient-to-r from-red-50 to-pink-50 border-2 border-red-300'
+          ? "bg-gradient-to-r from-green-50 to-emerald-50 border-2 border-green-300"
+          : "bg-gradient-to-r from-red-50 to-pink-50 border-2 border-red-300"
       }
      `}>
         <div className="flex items-center">
@@ -49,10 +47,10 @@ export const WorkflowResults = ({result}: WorkflowResultsProps) => {
           <span className={`
            text-lg font-semibold
            ${isRunning
-            ? 'text-gray-800'
+            ? "text-gray-800"
             : result.success
-              ? 'text-green-800'
-              : 'text-red-800'
+              ? "text-green-800"
+              : "text-red-800"
           }
          `}>
            {result.message}

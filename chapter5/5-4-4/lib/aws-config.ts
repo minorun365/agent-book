@@ -1,10 +1,10 @@
-import {AuthFetchAuthSessionServer} from "./amplify-server-utils";
+import { AuthFetchAuthSessionServer } from "./amplify-server-utils";
 
 
 export async function getBedrockModel() {
   try {
     // Bedrockのクライアントをインポート
-    const {createAmazonBedrock} = await import("@ai-sdk/amazon-bedrock");
+    const { createAmazonBedrock } = await import("@ai-sdk/amazon-bedrock");
     // BedrockモデルのIDとリージョンを設定
     const modelId = "us.anthropic.claude-3-7-sonnet-20250219-v1:0";
     const region = process.env.AWS_REGION || "us-west-2";
