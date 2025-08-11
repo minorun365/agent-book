@@ -57,9 +57,9 @@ class AgentState(BaseModel):
 
 
 system_prompt = """
-あなたの責務はAWStドキュメントを検索し、最後にMarkdown形式としてファイル出力することです。
+あなたの責務はAWStドキュメントを検索し、Markdown形式としてファイル出力することです。
 - 検索後、Markdown形式に変換してください。
-- 検索は最大で3回までとし、その時点での情報を出力してください。
+- 検索は最大で2回までとし、その時点での情報を出力してください。
 """
 async def agent(state: AgentState) -> Dict[str, List[AIMessage]]:    
     response = await llm_with_tools.ainvoke(
@@ -71,8 +71,6 @@ async def agent(state: AgentState) -> Dict[str, List[AIMessage]]:
 # ルーティング関数：ツールノードかENDノードへ遷移する
 def route_node(state: AgentState) -> Union[str]:
     last_message = state.messages[-1]  
-    if not isinstance(last_message, AIMessage):
-        raise ValueError("「AIMessage」以外のメッセージです。遷移が不正な可能性があります。")
     if not last_message.tool_calls:
         return END # ENDノードへ遷移
     return "tools" # ツールノードへ遷移
