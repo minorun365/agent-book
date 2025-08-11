@@ -1,45 +1,31 @@
 import { createWorkflow, createStep } from "@mastra/core/workflows";
-import {
-  confluenceSearchPagesTool,
-  confluenceGetPageTool,
-} from "../tools/confluenceTool";
-// 作成したツールをimport
-import { githubCreateIssueTool } from "../tools/githubTool";
+import { confluenceSearchPagesTool, confluenceGetPageTool } from "../tools/confluenceTool";
 import { assistantAgent } from "../agents/assistantAgent";
 import { z } from "zod";
 
-
+// ツールからステップを作成
 const confluenceSearchPagesStep = createStep(confluenceSearchPagesTool);
 const confluenceGetPageStep = createStep(confluenceGetPageTool);
-// 作成したGitHub Issuesツールをステップ化
-const githubCreateIssueStep = createStep(githubCreateIssueTool);
 export const handsonWorkflow = createWorkflow({
   id: "handsonWorkflow",
-// ワークフローの動作が変わったため修正
   description:
-    "自然言語の質問からConfluenceで要件書を検索し、GitHub Issueとして開発バックログを自動作成します。",
+    "自然言語の質問からConfluenceで要件書を検索し、内容を要約して回答します。",
   inputSchema: z.object({
     query: z
       .string()
       .describe(
         "検索したい内容を自然言語で入力してください（例：「AIについての情報」「最新のプロジェクト情報」）"
       ),
-    // GitHubアカウント名を追加
-    owner: z
-      .string()
-      .describe("GitHubリポジトリの所有者名（ユーザー名またはorganization名）"),
-    // GitHubリポジトリ名を追加
-    repo: z.string().describe("GitHubリポジトリ名"),
   }),
-// GitHubツールのoutputSchemaをそのまま指定
-  outputSchema: githubCreateIssueTool.outputSchema,
+  outputSchema: z.object({
+    text: z.string().describe("要約された回答"),
+  }),
 })
   .then(
     createStep({
       id: "generate-cql-query",
       inputSchema: z.object({
-        // ワークフローのinputSchemaと合わせる
-        query: z.string(), owner: z.string(), repo: z.string(),
+        query: z.string(),
       }),
       outputSchema: z.object({cql: z.string()}),
       execute: async ({ inputData }) => {
@@ -52,13 +38,16 @@ CQLの基本的な構文：
 - type = page：ページのみ検索
 - created >= "2024-01-01"：日付フィルタ
 
+
 検索要求: ${inputData.query}
+
 
 重要：
 - 単純な単語検索の場合は、text ~ "単語" の形式を使用
 - 複数の単語を含む場合は AND で結合
 - 日本語の検索語もそのまま使用可能
 - レスポンスはCQLクエリのみを返してください
+
 
 CQLクエリ:`;
 
@@ -94,7 +83,7 @@ CQLクエリ:`;
       }),
       execute: async ({ inputData }) => {
         // ページの一覧取得
-        const { pages, error } = inputData;
+        const {pages, error} = inputData;
         if (error) {
           throw new Error(`検索エラー: ${error}`);
         }
@@ -115,82 +104,77 @@ CQLクエリ:`;
   .then(confluenceGetPageStep)
   .then(
     createStep({
-      id: "create-development-tasks",
-      // Confluenceページ作成ツールのoutputSchemaをそのまま指定
-      inputSchema: confluenceGetPageTool.outputSchema,
-      // GitHub Issues作成ツールのinputSchemaをそのまま指定
-      outputSchema: githubCreateIssueTool.inputSchema,
+      id: "prepare-prompt",
+      inputSchema: z.object({
+        page: z.object({
+          id: z.string(),
+          title: z.string(),
+          url: z.string(),
+          content: z.string().optional(),
+        }),
+        error: z.string().optional(),
+      }),
+      outputSchema: z.object({
+        prompt: z.string(),
+        originalQuery: z.string(),
+        pageTitle: z.string(),
+        pageUrl: z.string(),
+      }),
       execute: async ({ inputData, getInitData }) => {
-        // 前のステップから受け渡されるConfluenceのページ情報
+        // 一つ前のステップのoutpuSchemaから渡されたデータ
         const { page, error } = inputData;
-        // GitHubのリポジトリ情報はワークフローの初期データから取得
-        const { owner, repo, query } = getInitData();
+        // ワークフローの最初に設定されたデータ
+        const initData = getInitData();
 
-
-        // いずれかの情報が取れない場合はエラーメッセージを送信
         if (error || !page || !page.content) {
           return {
-            owner: owner || "",
-            repo: repo || "",
-            issues: [
-              {
-                title: "エラー: ページの内容が取得できませんでした",
-                body: "Confluenceページの内容を取得できませんでした。",
-              },
-            ],
+            prompt: "ページの内容が取得できませんでした。",
+            originalQuery: initData.query || "",
+            pageTitle: page?.title || "不明",
+            pageUrl: page?.url || "",
           };
         }
-        // エージェントからの出力フォーマットを規定
-        const outputSchema = z.object({
-          issues: z.array(
-            z.object({
-              title: z.string(),
-              body: z.string(),
-            })
-          ),
-        });
-        // プロンプト
-        const analysisPrompt = `以下のConfluenceページの内容は要件書です。この要件書を分析して、開発バックログのGitHub Issueを複数作成するための情報を生成してください。
-ユーザーの質問: ${query}
+        // エージェントへの指示を作成
+        const prompt = `以下のConfluenceページの内容に基づいて、ユーザーの質問に答えてください。
+
+ユーザーの質問: ${initData.query}
+
 ページタイトル: ${page.title}
 ページ内容:
 ${page.content}
-重要：
-- 要件書の内容を機能やコンポーネント単位で分割
-- 各Issueのtitleは簡潔で分かりやすく
-- bodyはMarkdown形式で構造化
-- フォーマットはJSON配列形式で、必ず出力。枕詞は不要。トップの配列は必ず角括弧で囲む。
-- \`\`\`jsonのようなコードブロックは不要
-- 2つIssueを作成
-- 曖昧な部分は「要確認」として記載`;
 
+回答は簡潔で分かりやすく、必要に応じて箇条書きを使用してください。`;
+        return {
+          prompt,
+          originalQuery: initData.query || "",
+          pageTitle: page.title,
+          pageUrl: page.url,
+        };
+      },
+    })
+  )
+  .then(
+    createStep({
+      id: "assistant-response",
+      inputSchema: z.object({
+        prompt: z.string(),
+        originalQuery: z.string(),
+        pageTitle: z.string(),
+        pageUrl: z.string(),
+      }),
+      // ワークフローのoutputSchemaと一致させる
+      outputSchema: z.object({text: z.string(),}),
+      execute: async ({ inputData }) => {
         try {
-          const result = await assistantAgent.generate(analysisPrompt, {
-            output: outputSchema, // エージェントからの出力フォーマットを指定
-          });
-          const issues = result.object.issues.map((issue: any) => ({
-            title: issue.title,
-            body: issue.body,
-          }));
+          // エージェントを実行しテキスト生成結果を受け取る
+          const result = await assistantAgent.generate(inputData.prompt);
           return {
-            owner: owner || "",
-            repo: repo || "",
-            issues: issues,
+            text: result.text,
           };
         } catch (error) {
-          return {
-            owner: owner,
-            repo: repo,
-            issues: [
-              {
-                title: "エラー: Issue作成に失敗",
-                body: "エラーが発生しました: " + String(error),
-              },
-            ],
-          };
+          return { text: "エラーが発生しました: " + String(error), };
         }
       },
     })
   )
-  .then(githubCreateIssueStep)
   .commit();
