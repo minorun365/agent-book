@@ -24,7 +24,7 @@ export async function POST(request: NextRequest) {
     }
 
     // ワークフローを実行
-    const run = workflow.createRun();
+    const run = await workflow.createRunAsync();
     const result = await run.start({
       inputData: { query, owner, repo }
     });
