@@ -66,12 +66,12 @@ async def agent(state: AgentState) -> Dict[str, List[AIMessage]]:
 
     return {"messages": [response]}
 
-# ルーティング関数：ツールノードかENDノードへ遷移する
+# ルーティング関数：toolsノードかENDノードへ遷移する
 def route_node(state: AgentState) -> Union[str]:
     last_message = state.messages[-1]  
     if not last_message.tool_calls:
         return END # ENDノードへ遷移
-    return "tools" # ツールノードへ遷移
+    return "tools" # toolsノードへ遷移
 
 async def main():
     # MCPクライアントとツールを初期化

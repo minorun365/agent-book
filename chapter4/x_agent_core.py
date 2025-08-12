@@ -23,6 +23,7 @@ load_dotenv(override=True)
 web_search = TavilySearch(max_results=2, topic="general")
 
 working_directory = "report"
+# ローカルファイルを扱うツールキット
 file_toolkit = FileManagementToolkit(
     root_dir=str(working_directory),
     selected_tools=["write_file"], # ファイル書き込みツールを指定
@@ -46,12 +47,12 @@ llm_with_tools = init_chat_model(
 # システムプロンプト
 system_prompt = """
 あなたの責務はユーザからのリクエストを調査し、調査結果をファイル出力することです。
-- ユーザのリクエスト調査にWeb検索が必要であれば、Web検索ツールを使ってください。
+- ユーザーのリクエスト調査にWeb検索が必要であれば、Web検索ツールを使ってください。
 - 必要な情報が集まったと判断したら検索は終了して下さい。
 - 検索は最大2回までとしてください。
 - ファイル出力はHTML形式(.html)に変換して保存してください。
   * Web検索が拒否された場合、Web検索を中止してレポート作成してください。
-  * レポート保存を拒否された場合、レポート作成を中止して、内容をユーザに直接伝えて下さい。
+  * レポート保存を拒否された場合、レポート作成を中止し、内容をユーザーに直接伝えて下さい。
 """
 
 # LLMを呼び出すタスク
