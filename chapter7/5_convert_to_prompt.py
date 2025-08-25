@@ -8,4 +8,4 @@ prompt_template = langfuse.get_prompt("ai-agent", type="chat", label="latest")
 
 langchain_prompt = ChatPromptTemplate(prompt_template.get_langchain_prompt())
 messages = langchain_prompt.invoke({"city": "東京都"})
-print(messagses)
+print(messages)
