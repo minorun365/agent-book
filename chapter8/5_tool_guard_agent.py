@@ -59,7 +59,7 @@ def check_tool_use(state: MessagesState) -> Command[Literal["tools"]]:
         report_text = tool_call["args"]["report_text"]
 
         response = bedrock_runtime_client.apply_guardrail(
-            guardrailIdentifier= #<GuardrailのID>,
+            guardrailIdentifier= # ガードレールのID
             guardrailVersion="DRAFT",
             source="OUTPUT",
             content=[
