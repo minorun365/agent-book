@@ -4,41 +4,39 @@ from dotenv import load_dotenv
 load_dotenv()
 
 def create_bedrock_attack_guardrail():
-    bedrock_client = boto3.client('bedrock')
-    aws_account_id = boto3.client('sts').get_caller_identity()["Account"]
+    bedrock_client = boto3.client("bedrock")
+    aws_account_id = boto3.client("sts").get_caller_identity()["Account"]
     region = os.getenv("AWS_DEFAULT_REGION")
 
     response = bedrock_client.create_guardrail(
-        name='PromptInjectionGuardrail',
+        name="PromptInjectionGuardrail",
         # コンテンツフィルターの設定
         contentPolicyConfig={
-            'filtersConfig': [
+            "filtersConfig": [
                 {
-                    'type': 'PROMPT_ATTACK',
-                    'inputStrength': 'HIGH',
-                    'inputAction': 'BLOCK',
-                    'outputStrength': 'NONE',
-                    'outputAction': 'NONE',
-                    'inputEnabled': True,
-                    'outputEnabled': False, 
-                    'inputModalities': ['TEXT'],
-                    'outputModalities': ['TEXT']
+                    "type": "PROMPT_ATTACK",
+                    "inputStrength": "HIGH",
+                    "inputAction": "BLOCK",
+                    "outputStrength": "NONE",
+                    "outputAction": "NONE",
+                    "inputEnabled": True,
+                    "outputEnabled": False,
+                    "inputModalities": ["TEXT"],
+                    "outputModalities": ["TEXT"],
                 },
             ],
-            'tierConfig': {
-                'tierName': 'STANDARD'
-            }
+            "tierConfig": {"tierName": "STANDARD"},
         },
         crossRegionConfig={
-            'guardrailProfileIdentifier': f'arn:aws:bedrock:{region}:{aws_account_id}:guardrail-profile/us.guardrail.v1:0'
+            "guardrailProfileIdentifier": f"arn:aws:bedrock:{region}:{aws_account_id}:guardrail-profile/us.guardrail.v1:0"
         },
         # ブロック時のメッセージ
-        blockedInputMessaging='攻撃を検知しました。ブロックします。',
-        blockedOutputsMessaging='攻撃を検知しました。ブロックします。',
+        blockedInputMessaging="攻撃を検知しました。ブロックします。",
+        blockedOutputsMessaging="攻撃を検知しました。ブロックします。",
     )
     print("Created guardrail:")
-    print(f"ID : {response['guardrailId']}")
-    print(f"ARN: {response['guardrailArn']}")
-    print(f"Version: {response['version']}")
+    print(f"ID : {response["guardrailId"]}")
+    print(f"ARN: {response["guardrailArn"]}")
+    print(f"Version: {response["version"]}")
 
 create_bedrock_attack_guardrail()
