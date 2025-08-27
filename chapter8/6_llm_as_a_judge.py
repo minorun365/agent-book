@@ -5,7 +5,8 @@ from langchain.chat_models import init_chat_model
 from dotenv import load_dotenv
 load_dotenv()
 
-user_input = "日本の首都はどこでしょうか？質問に端的に回答してください。"
+user_input = "日本の首都はどこでしょうか？"
+# user_input = "日本の首都はどこでしょうか？質問に端的に回答してください。"
 llm = init_chat_model(
     model="us.anthropic.claude-3-7-sonnet-20250219-v1:0",
     model_provider="bedrock_converse",
