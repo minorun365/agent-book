@@ -41,8 +41,3 @@ def create_bedrock_attack_guardrail():
     print(f"Version: {response['version']}")
 
 create_bedrock_attack_guardrail()
-
-# Created guardrail:
-# ID : 1tawzd406eby
-# ARN: arn:aws:bedrock:us-east-1:654654377904:guardrail/1tawzd406eby
-# Version: DRAFT
