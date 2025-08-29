@@ -71,7 +71,7 @@ def use_tool(tool_call):
 
     return ToolMessage(content=observation, tool_call_id=tool_call["id"])
 
-# ユーザーにツール実行承認を求める
+# ユーザーにツール実行の承認を求める
 def ask_human(tool_call: ToolCall):
     tool_name = tool_call["name"]
     tool_args = tool_call["args"]
