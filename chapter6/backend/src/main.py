@@ -41,6 +41,6 @@ async def invoke(payload):
         setup_aws_master(None)
         setup_api_master(None)
 
-# AgentCoreランタイムを起動
+# APIサーバーを起動
 if __name__ == "__main__":
     app.run()
