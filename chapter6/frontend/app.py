@@ -6,7 +6,7 @@ from agent_executor import invoke
 load_dotenv(override=True)
 
 # タイトル表示
-st.title("AWS開発お助けマルチエージェント")
+st.title("AWS開発お助けエージェント")
 st.write("AWSドキュメントや、あなたのアカウントの調査をお手伝いします！")
 
 # セッションを初期化
