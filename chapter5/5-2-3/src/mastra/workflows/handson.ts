@@ -52,7 +52,7 @@ CQLの基本的な構文：
 CQLクエリ:`;
 
         try {
-          const result = await assistantAgent.generate(prompt);
+          const result = await assistantAgent.generateVNext(prompt);
           const cql = result.text.trim();
           return { cql };
         } catch (error) {

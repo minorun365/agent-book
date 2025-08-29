@@ -63,7 +63,7 @@ CQLの基本的な構文：
 CQLクエリ:`;
 
         try {
-          const result = await assistantAgent.generate(prompt);
+          const result = await assistantAgent.generateVNext(prompt);
           const cql = result.text.trim();
           return { cql };
         } catch (error) {
@@ -165,10 +165,12 @@ ${page.content}
 - 曖昧な部分は「要確認」として記載`;
 
         try {
-          const result = await assistantAgent.generate(analysisPrompt, {
+          const result = await assistantAgent.generateVNext(analysisPrompt, {
             output: outputSchema, // エージェントからの出力フォーマットを指定
           });
-          const issues = result.object.issues.map((issue: any) => ({
+          // JSONからIssueの配列を取り出す
+          const parsedResult = JSON.parse(result.text);
+          const issues = parsedResult.issues.map((issue: any) => ({
             title: issue.title,
             body: issue.body,
           }));
