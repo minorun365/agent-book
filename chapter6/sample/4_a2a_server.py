@@ -1,5 +1,8 @@
+from dotenv import load_dotenv
 from strands import Agent
 from strands.multiagent.a2a import A2AServer
+
+load_dotenv()
 
 # リモートエージェントを作成
 agent = Agent(
