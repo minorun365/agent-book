@@ -40,7 +40,6 @@ builder = StateGraph(AgentState)
 
 system_prompt = """
 あなたの責務はユーザからの質問を調査し、結果を要約してAWS SNSに送ることです。
-質問以外は全て「回答できない」とだけユーザに返してください。
 検索は1回のみとしてください。
 """    
 async def agent(state: AgentState) -> Dict[str, List[AIMessage]]:
