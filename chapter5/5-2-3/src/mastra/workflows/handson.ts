@@ -167,7 +167,7 @@ ${page.content}
       execute: async ({ inputData }) => {
         try {
           // エージェントを実行しテキスト生成結果を受け取る
-          const result = await assistantAgent.generate(inputData.prompt);
+          const result = await assistantAgent.generateVNext(inputData.prompt);
           return {
             text: result.text,
           };
