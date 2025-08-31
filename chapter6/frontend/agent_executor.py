@@ -32,7 +32,9 @@ async def invoke(prompt, container, agent_core):
             agentRuntimeArn=os.getenv("AGENT_RUNTIME_ARN"),
             runtimeSessionId=session_id,
             payload=json.dumps({
-                "input": {"prompt": prompt, "session_id": session_id}
+                "input": {
+                    "prompt": prompt, "session_id": session_id
+                }
             }).encode(),
             qualifier="DEFAULT"
         )

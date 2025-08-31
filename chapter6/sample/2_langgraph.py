@@ -1,11 +1,14 @@
+from dotenv import load_dotenv
 from langchain_core.messages import AIMessage
 from langchain.chat_models import init_chat_model
 from langgraph.types import Command
 from langgraph.graph import StateGraph, MessagesState, START, END
 
+load_dotenv()
+
 # モデルを設定
 model = init_chat_model(
-    model="us.anthropic.claude-sonnet-4-20250514-v1:0",
+    model="us.anthropic.claude-3-7-sonnet-20250219-v1:0",
     model_provider="bedrock_converse"
 )
 
