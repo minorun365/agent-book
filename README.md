@@ -50,3 +50,4 @@ https://www.sbcr.jp/product/4815636609/
 - からあげさん [AIエージェント関連書籍4冊を徹底比較 - karaage. [からあげ]](https://karaage.hatenadiary.jp/entry/2025/10/01/073000)
 - ふくちさん [書籍「AIエージェント開発/運用入門」のレビューへ参加させていただきました！](https://qiita.com/har1101/items/d070a6b8181f24ed6697)
 - たけさん [書籍「AIエージェント開発/運用入門」をやってみる。その１｜のんびりと](https://note.com/bnctake/n/naf36facb7287)
+- ツカジーさん [【良書】「AIエージェント開発/運用入門」のハンズオンをやってみた](https://qiita.com/zzzzico/items/23c2b4e04ffb1d111000)
