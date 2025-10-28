@@ -37,7 +37,7 @@ https://www.sbcr.jp/product/4815636609/
 
 ### 第5章
 
-- P.162/197： Mastra関連ライブラリのバージョンアップに伴い、インストールコマンドを一部更新しました。[コピペ用のコマンドファイル](https://github.com/minorun365/agent-book/blob/main/chapter5/%E3%82%B3%E3%83%94%E3%83%9A%E7%94%A8%E3%82%B3%E3%83%9E%E3%83%B3%E3%83%89.md)を参照ください。気づいてくださった @ytak-sagit さん、ありがとうございます！
+- P.162/197： Mastra関連ライブラリのバージョンアップに伴い、インストールコマンドを一部更新しました。[コピペ用のコマンドファイル](https://github.com/minorun365/agent-book/blob/main/chapter5/%E3%82%B3%E3%83%94%E3%83%9A%E7%94%A8%E3%82%B3%E3%83%9E%E3%83%B3%E3%83%89.md)を参照ください。気づいてくださった[ytak-sagit](https://github.com/ytak-sagit)さん、ありがとうございます！
 
 ### 付録
 
