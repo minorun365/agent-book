@@ -9,6 +9,7 @@ https://www.sbcr.jp/product/4815636609/
 
 ## 📣 新着のお知らせ（詳細は後述）
 
+- 【2025/10/28更新】第5章 Mastraのインストールコマンドを更新しました。
 - 【2025/10/17更新】付録 Bedrockのクォータ緩和申請手順の変更内容を補足しました。
 - 【2025/10/16更新】第2章 Bedrockのモデルアクセス有効化手順の変更内容を補足しました。
 - 【2025/10/4更新】第3章 VoltAgentのV1リリースに伴い、サンプルコードを更新しました。
@@ -33,6 +34,10 @@ https://www.sbcr.jp/product/4815636609/
 ### 第3章
 
 - P.60： 9/16にVoltAgent V1がリリースされました。Agentクラスから `llm` オプションが削除されたことに加え、VoltAgentクラスでサーバーの組み込みが必要となったため、[サンプルコード](https://github.com/minorun365/agent-book/blob/main/chapter3/sample/4_voltagent.ts)を更新しています。気づいてくださった[chiaoi](https://x.com/_chiaoi)さん、ありがとうございます！（参考：[公式ドキュメント](https://voltagent.dev/docs/getting-started/migration-guide/)）
+
+### 第5章
+
+- P.162/197： Mastra関連ライブラリのバージョンアップに伴い、インストールコマンドを一部更新しました。[コピペ用のコマンドファイル](https://github.com/minorun365/agent-book/blob/main/chapter5/%E3%82%B3%E3%83%94%E3%83%9A%E7%94%A8%E3%82%B3%E3%83%9E%E3%83%B3%E3%83%89.md)を参照ください。気づいてくださった @ytak-sagit さん、ありがとうございます！
 
 ### 付録
 
