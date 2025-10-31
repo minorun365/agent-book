@@ -1,4 +1,4 @@
 strands-agents==1.6.0
 strands-agents-tools==0.2.5
 bedrock-agentcore==0.1.2
-uv==0.8.13
+uv==0.9.6
