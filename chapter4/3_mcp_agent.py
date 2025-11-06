@@ -70,7 +70,7 @@ async def agent(state: AgentState) -> Dict[str, List[AIMessage]]:
 def route_node(state: AgentState) -> Union[str]:
     last_message = state.messages[-1]
     if not isinstance(last_message, AIMessage):
-	    raise ValueError("「AIMessage」以外のメッセージです。遷移が不正な可能性があります。")
+        raise ValueError("「AIMessage」以外のメッセージです。遷移が不正な可能性があります。")
     if not last_message.tool_calls:
         return END # ENDノードへ遷移
     return "tools" # toolsノードへ遷移
