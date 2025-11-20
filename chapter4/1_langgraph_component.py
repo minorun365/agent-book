@@ -12,13 +12,13 @@ builder = StateGraph(State)
 
 # ノード関数の定義
 def search_web(state: State) -> Dict[str, Any]:
-    return {"id": 123, "messages": ["WebSearch"]}
+    return {"messages": ["WebSearch"]}
 
 def summarize(state: State) -> Dict[str, Any]:
-    return {"id": 123, "messages": ["Summarizer"]}
+    return {"messages": ["Summarizer"]}
 
 def save_record(state: State) -> Dict[str, Any]:
-    return {"id": 123, "messages": ["Recorder"]}
+    return {"messages": ["Recorder"]}
 
 # ルーティング関数の定義
 def routing_function(state: State) -> Literal["Summarizer", "Recorder"]:
