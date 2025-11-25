@@ -9,6 +9,7 @@ https://www.sbcr.jp/product/4815636609/
 
 ## 📣 新着のお知らせ（詳細は後述）
 
+- 【2025/11/25更新】第4章 AWSの仕様変更により4.3のハンズオンでエラーが出るようになったため、サンプルコード修正しました。
 - 【2025/11/2更新】第5章 Mastraのインストールコマンドに誤植がありました（第3刷のみ）。
 - 【2025/10/28更新】第5章 Mastraのインストールコマンドを更新しました。
 - 【2025/10/17更新】付録 Bedrockのクォータ緩和申請手順の変更内容を補足しました。
@@ -35,6 +36,10 @@ https://www.sbcr.jp/product/4815636609/
 ### 第3章
 
 - P.60： 9/16にVoltAgent V1がリリースされました。Agentクラスから `llm` オプションが削除されたことに加え、VoltAgentクラスでサーバーの組み込みが必要となったため、[サンプルコード](https://github.com/minorun365/agent-book/blob/main/chapter3/sample/4_voltagent.ts)を更新しています。気づいてくださった[chiaoi](https://x.com/_chiaoi)さん、ありがとうございます！（参考：[公式ドキュメント](https://voltagent.dev/docs/getting-started/migration-guide/)）
+
+### 第4章
+
+- P.122： 11/23頃から、4.3のハンズオン[コード](https://github.com/minorun365/agent-book/blob/main/chapter4/3_mcp_agent.py)を実行すると、BedrockのConverse APIからバリデーションエラーが返るようになりました。LangChain側に[バグ報告](https://github.com/langchain-ai/langchain-aws/issues/775)も上がっているので、今後のアップデートで修正される可能性もありますが、とり急ぎエラーが起きないよう、本書の[サンプルコード](https://github.com/minorun365/agent-book/blob/main/chapter4/3_mcp_agent.py)を暫定修正済みです。45-56行目のコードを追加してお使いください。
 
 ### 第5章
 
