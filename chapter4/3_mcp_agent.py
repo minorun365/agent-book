@@ -42,7 +42,7 @@ async def initialize_llm():
     # MCPサーバーをLangChainツールとして取得
     tools = await mcp_client.get_tools()
 
-    # ツールの出力スキーマを厳格化（11/25 挙動変更トラブルへの対応）
+    # ツール定義のスキーマを厳格化（11/25 挙動変更トラブルへの対応）
     for t in tools:
         schema = getattr(t, "args_schema", None)
         if not isinstance(schema, dict):
