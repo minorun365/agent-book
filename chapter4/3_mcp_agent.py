@@ -41,6 +41,19 @@ async def initialize_llm():
     )
     # MCPサーバーをLangChainツールとして取得
     tools = await mcp_client.get_tools()
+
+    # ツールの出力スキーマを厳格化（11/25 Bedrock仕様変更への対応）
+    for t in tools:
+        schema = getattr(t, "args_schema", None)
+        if not isinstance(schema, dict):
+            continue
+        if schema.get("type") != "object":
+            schema["type"] = "object"
+        if not isinstance(schema.get("properties"), dict):
+            schema["properties"] = {}
+        if not isinstance(schema.get("required"), list):
+            schema["required"] = []
+        t.args_schema = schema
     
     # LLMの初期化
     llm_with_tools = init_chat_model(
