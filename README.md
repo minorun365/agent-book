@@ -39,7 +39,7 @@ https://www.sbcr.jp/product/4815636609/
 
 ### 第4章
 
-- P.122： 11/23頃から、4.3のハンズオン[コード](https://github.com/minorun365/agent-book/blob/main/chapter4/3_mcp_agent.py)を実行すると、BedrockのConverse APIからバリデーションエラーが返るようになりました。LangChain側に[バグ報告](https://github.com/langchain-ai/langchain-aws/issues/775)も上がっているので、今後のアップデートで修正される可能性もありますが、とり急ぎエラーが起きないよう、本書の[サンプルコード](https://github.com/minorun365/agent-book/blob/main/chapter4/3_mcp_agent.py)を暫定修正済みです。45-56行目のコードを追加してお使いください。
+- P.122： 11/23頃から、4.3のハンズオン[コード](https://github.com/minorun365/agent-book/blob/main/chapter4/3_mcp_agent.py)を実行すると、BedrockのConverse APIからバリデーションエラーが返るようになりました。LangChain側に[バグ報告](https://github.com/langchain-ai/langchain-aws/issues/775)も上がっているので、今後のアップデートで修正される可能性もありますが、とり急ぎエラーが起きないよう、本書の[サンプルコード](https://github.com/minorun365/agent-book/blob/main/chapter4/3_mcp_agent.py)を暫定修正済みです。45-56行目のコードを追加してお使いください。気づいてくださった[TasukuMatsuura](https://github.com/TasukuMatsuura)さん、ありがとうございます！
 
 ### 第5章
 
