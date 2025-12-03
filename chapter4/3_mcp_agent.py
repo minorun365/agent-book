@@ -27,7 +27,7 @@ async def initialize_llm():
                 "command": "npx",
                 "args": [
                     "-y",
-                    "@modelcontextprotocol/server-filesystem",
+                    "@modelcontextprotocol/server-filesystem@2025.7.1",
                     "./"
                 ],
                 "transport": "stdio",
@@ -42,18 +42,9 @@ async def initialize_llm():
     # MCPサーバーをLangChainツールとして取得
     tools = await mcp_client.get_tools()
 
-    # ツール定義のスキーマを厳格化（11/25 挙動変更トラブルへの対応）
+    # ツール定義のスキーマを整形
     for t in tools:
-        schema = getattr(t, "args_schema", None)
-        if not isinstance(schema, dict):
-            continue
-        if schema.get("type") != "object":
-            schema["type"] = "object"
-        if not isinstance(schema.get("properties"), dict):
-            schema["properties"] = {}
-        if not isinstance(schema.get("required"), list):
-            schema["required"] = []
-        t.args_schema = schema
+        getattr(t, "args_schema", {})["type"] = "object"
     
     # LLMの初期化
     llm_with_tools = init_chat_model(
