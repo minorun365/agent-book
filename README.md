@@ -9,7 +9,7 @@ https://www.sbcr.jp/product/4815636609/
 
 ## 📣 新着のお知らせ（詳細は後述）
 
-- 【2025/11/25更新】第4章 AWSの仕様変更により4.3のハンズオンでエラーが出るようになったため、サンプルコード修正しました。
+- 【2025/12/3更新】第4章 仕様変更により4.3のハンズオンでエラーが出るようになったため、サンプルコード修正しました。
 - 【2025/11/2更新】第5章 Mastraのインストールコマンドに誤植がありました（第3刷のみ）。
 - 【2025/10/28更新】第5章 Mastraのインストールコマンドを更新しました。
 - 【2025/10/17更新】付録 Bedrockのクォータ緩和申請手順の変更内容を補足しました。
@@ -39,7 +39,7 @@ https://www.sbcr.jp/product/4815636609/
 
 ### 第4章
 
-- P.122： 11/23頃から、4.3のハンズオン[コード](https://github.com/minorun365/agent-book/blob/main/chapter4/3_mcp_agent.py)を実行すると、BedrockのConverse APIからバリデーションエラーが返るようになりました。LangChain側に[バグ報告](https://github.com/langchain-ai/langchain-aws/issues/775)も上がっているので、今後のアップデートで修正される可能性もありますが、とり急ぎエラーが起きないよう、本書の[サンプルコード](https://github.com/minorun365/agent-book/blob/main/chapter4/3_mcp_agent.py)を暫定修正済みです。45-56行目のコードを追加してお使いください。気づいてくださった[TasukuMatsuura](https://github.com/TasukuMatsuura)さん、ありがとうございます！
+- P.122： 11月下旬頃から、4.3のハンズオン[コード](https://github.com/minorun365/agent-book/blob/main/chapter4/3_mcp_agent.py)を実行すると、エラーが発生するようになりました。2件の問題を含んでおり、Bedrock側のConverse APIの仕様変更と、Filesystems MCPサーバーのバージョンアップに伴う仕様変更が原因と思われます。本書の[サンプルコード](https://github.com/minorun365/agent-book/blob/main/chapter4/3_mcp_agent.py)を更新済みです。気づいてくださった[TasukuMatsuura](https://github.com/TasukuMatsuura)さん、ありがとうございます！
 
 ### 第5章
 
