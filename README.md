@@ -44,12 +44,11 @@ https://www.sbcr.jp/product/4815636609/
 
 ### 第5章
 
-- P.162： 以下の対処として、[コピペ用のコマンドファイル](https://github.com/minorun365/agent-book/blob/main/chapter5/%E3%82%B3%E3%83%94%E3%83%9A%E7%94%A8%E3%82%B3%E3%83%9E%E3%83%B3%E3%83%89.md)を更新しました。
+- P.162/197： 以下の対処として、[コピペ用のコマンドファイル](https://github.com/minorun365/agent-book/blob/main/chapter5/%E3%82%B3%E3%83%94%E3%83%9A%E7%94%A8%E3%82%B3%E3%83%9E%E3%83%B3%E3%83%89.md)を更新しました。
   - Mastra関連ライブラリのバージョンアップに伴い、インストールコマンドを一部更新しました。気づいてくださった[ytak-sagit](https://github.com/ytak-sagit)さん、ありがとうございます！
   - 第3刷のみ、Mastraのインストールコマンドに1箇所誤植がありました。`npx mastra init@0.11.3` ではなく `npx mastra@0.11.3 init` が正となります。気づいてくださった[Koichi](https://github.com/Koichi73)さん、ありがとうございます！
   - Zodライブラリのアップデートに伴い、後続のAmplifyビルドでエラーが発生するようになっていました。気づいてくださった[ryota0051](https://github.com/ryota0051)さん、ありがとうございます！
 - P.196： 現在話題のReactの脆弱性（React2Shell）を回避できるよう、[コピペ用のコマンドファイル](https://github.com/minorun365/agent-book/blob/main/chapter5/%E3%82%B3%E3%83%94%E3%83%9A%E7%94%A8%E3%82%B3%E3%83%9E%E3%83%B3%E3%83%89.md)を更新しました。
-- P.197： Mastra関連ライブラリのバージョンアップに伴い、インストールコマンドを一部更新しました。[コピペ用のコマンドファイル](https://github.com/minorun365/agent-book/blob/main/chapter5/%E3%82%B3%E3%83%94%E3%83%9A%E7%94%A8%E3%82%B3%E3%83%9E%E3%83%B3%E3%83%89.md)を参照ください。気づいてくださった[ytak-sagit](https://github.com/ytak-sagit)さん、ありがとうございます！
 
 ### 付録
 
