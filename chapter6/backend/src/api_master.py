@@ -20,7 +20,7 @@ def setup_api_master(queue):
             _state.client = MCPClient(
                 lambda: stdio_client(StdioServerParameters(
                     command="uvx",
-                    args=["awslabs.aws-api-mcp-server"],
+                    args=["awslabs.aws-api-mcp-server==0.2.1"],
                     env=os.environ.copy()
                 ))
             )
