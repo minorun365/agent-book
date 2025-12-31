@@ -6,6 +6,6 @@ langchain-aws==0.2.31
 langchain-tavily==0.2.11
 python_dotenv==1.1.1
 langchain-mcp-adapters==0.1.9
-uv==0.8.14
+uv==0.9.6
 streamlit==1.49.1
 langchain-community==0.3.29
