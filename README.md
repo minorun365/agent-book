@@ -9,6 +9,7 @@ https://www.sbcr.jp/product/4815636609/
 
 ## 📣 新着のお知らせ（詳細は後述）
 
+- 【2025/12/31更新】第6章 AWS MCPサーバーのバージョンアップでエラーが出るようになったため、サンプルコード修正しました。
 - 【2025/12/10更新】第5章 仕様変更により5.2のハンズオンでエラーが出るようになったため、コピペ用コマンドを修正しました。
 - 【2025/12/3更新】第4章 仕様変更により4.3のハンズオンでエラーが出るようになったため、サンプルコード修正しました。
 - 【2025/11/2更新】第5章 Mastraのインストールコマンドに誤植がありました（第3刷のみ）。
@@ -49,6 +50,10 @@ https://www.sbcr.jp/product/4815636609/
   - 第3刷のみ、Mastraのインストールコマンドに1箇所誤植がありました。`npx mastra init@0.11.3` ではなく `npx mastra@0.11.3 init` が正となります。気づいてくださった[Koichi](https://github.com/Koichi73)さん、ありがとうございます！
   - Zodライブラリのアップデートに伴い、後続のAmplifyビルドでエラーが発生するようになっていました。気づいてくださった[ryota0051](https://github.com/ryota0051)さん、ありがとうございます！
 - P.196： 現在話題のReactの脆弱性（React2Shell）を回避できるよう、[コピペ用のコマンドファイル](https://github.com/minorun365/agent-book/blob/main/chapter5/%E3%82%B3%E3%83%94%E3%83%9A%E7%94%A8%E3%82%B3%E3%83%9E%E3%83%B3%E3%83%89.md)を更新しました。
+
+### 第6章
+
+- P.268： AWS API MCPサーバーのアップデートに伴い `Propagator xray not found` エラーが出るようになったため、MCPサーバーのバージョンを固定しました。本書の[サンプルコード](https://github.com/minorun365/agent-book/blob/main/chapter6/backend/src/api_master.py#L23)を更新済みです。気づいてくださった[ryota0051](https://github.com/ryota0051)さん、ありがとうございます！
 
 ### 付録
 
