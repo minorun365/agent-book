@@ -36,7 +36,7 @@ export const WorkflowForm = ({
           value={formData.query}
           onChange={onInputChange}
           placeholder="例: AIについての情報"
-          className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl shadow-sm transition-all duration-200 focus:outline-none focus:ring-4 focus:ring-blue-100 focus:border-blue-500 hover:border-gray-300"
+          className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl shadow-sm text-gray-900 transition-all duration-200 focus:outline-none focus:ring-4 focus:ring-blue-100 focus:border-blue-500 hover:border-gray-300"
           required
         />
       </div>
@@ -54,7 +54,7 @@ export const WorkflowForm = ({
             value={formData.owner}
             onChange={onInputChange}
             placeholder="例: octocat"
-            className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl shadow-sm transition-all duration-200 focus:outline-none focus:ring-4 focus:ring-blue-100 focus:border-blue-500 hover:border-gray-300"
+            className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl shadow-sm text-gray-900 transition-all duration-200 focus:outline-none focus:ring-4 focus:ring-blue-100 focus:border-blue-500 hover:border-gray-300"
             required
           />
         </div>
@@ -71,7 +71,7 @@ export const WorkflowForm = ({
             value={formData.repo}
             onChange={onInputChange}
             placeholder="例: mastra_practice"
-            className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl shadow-sm transition-all duration-200 focus:outline-none focus:ring-4 focus:ring-blue-100 focus:border-blue-500 hover:border-gray-300"
+            className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl shadow-sm text-gray-900 transition-all duration-200 focus:outline-none focus:ring-4 focus:ring-blue-100 focus:border-blue-500 hover:border-gray-300"
             required
           />
         </div>
