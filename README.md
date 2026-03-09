@@ -54,7 +54,7 @@ https://www.sbcr.jp/product/4815636609/
 
 ### 第6章
 
-- P.284： Mastraのバージョンアップ（@mastra/core v1.x）に伴い、エージェントネットワークのAPIが変更されました。`NewAgentNetwork` が廃止され、`Agent` クラスの `agents` オプションでネットワーク構成を定義する書き方に変わっています。本書の[サンプルコード](https://github.com/minorun365/agent-book/blob/main/chapter6/sample/3_mastra.ts)を更新済みです。
+- P.257： Mastraのバージョンアップ（@mastra/core v1.x）に伴い、エージェントネットワークのAPIが変更されました。`NewAgentNetwork` が廃止され、`Agent` クラスの `agents` オプションでネットワーク構成を定義する書き方に変わっています。本書の[サンプルコード](https://github.com/minorun365/agent-book/blob/main/chapter6/sample/3_mastra.ts)を更新済みです。
 - P.268： AWS API MCPサーバーのアップデートに伴い `Propagator xray not found` エラーが出るようになったため、MCPサーバーのバージョンを固定しました。本書の[サンプルコード](https://github.com/minorun365/agent-book/blob/main/chapter6/backend/src/api_master.py#L23)を更新済みです。気づいてくださった[ryota0051](https://github.com/ryota0051)さん、ありがとうございます！
 
 ### 付録
