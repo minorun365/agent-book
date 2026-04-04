@@ -8,7 +8,7 @@ from .stream_handler import merge_streams
 def _create_orchestrator():
     """監督者エージェントを作成"""
     return Agent(
-        model="us.anthropic.claude-3-7-sonnet-20250219-v1:0",
+        model="us.anthropic.claude-sonnet-4-6-20250929-v1:0",
         tools=[aws_master, api_master],
         system_prompt="""2体のサブエージェントを使って日本語で応対して。
 1. AWSマスター：AWSドキュメントなどを参照できます。
