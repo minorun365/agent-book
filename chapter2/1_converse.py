@@ -10,7 +10,7 @@ client = boto3.client("bedrock-runtime")
 
 # Converse APIを実行
 response = client.converse(
-    modelId="us.anthropic.claude-sonnet-4-6-20250929-v1:0", # モデルID
+    modelId="us.anthropic.claude-sonnet-4-6", # モデルID
     messages=[{
         "role": "user",
         "content": [{

@@ -35,7 +35,7 @@ https://www.sbcr.jp/product/4815636609/
 
 ### 全章共通
 
-- 書籍のサンプルコードで使用しているClaude 3.7 Sonnetは、2026年2月に廃止されました。本リポジトリのサンプルコードはClaude Sonnet 4.6（`us.anthropic.claude-sonnet-4-6-20250929-v1:0`）に更新済みです。気づいてくださった[tomet37](https://github.com/tomet37)さん、ありがとうございます！
+- 書籍のサンプルコードで使用しているClaude 3.7 Sonnetは、2026年2月に廃止されました。本リポジトリのサンプルコードはClaude Sonnet 4.6（`us.anthropic.claude-sonnet-4-6`）に更新済みです。気づいてくださった[tomet37](https://github.com/tomet37)さん、ありがとうございます！
 
 ### 第2章
 

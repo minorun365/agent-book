@@ -21,7 +21,7 @@ file_toolkit = FileManagementToolkit(
 
 # LLMインスタンスの生成
 llm = init_chat_model(
-    model="us.anthropic.claude-sonnet-4-6-20250929-v1:0",
+    model="us.anthropic.claude-sonnet-4-6",
     model_provider="bedrock_converse"
 )
 # AIエージェントの構築

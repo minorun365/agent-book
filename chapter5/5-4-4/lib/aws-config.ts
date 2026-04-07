@@ -6,7 +6,7 @@ export async function getBedrockModel() {
     // Bedrockのクライアントをインポート
     const { createAmazonBedrock } = await import("@ai-sdk/amazon-bedrock");
     // BedrockモデルのIDとリージョンを設定
-    const modelId = "us.anthropic.claude-sonnet-4-6-20250929-v1:0";
+    const modelId = "us.anthropic.claude-sonnet-4-6";
     const region = process.env.AWS_REGION || "us-west-2";
     // 認証セッションを取得
     const session = await AuthFetchAuthSessionServer();

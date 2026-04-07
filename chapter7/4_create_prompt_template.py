@@ -12,7 +12,7 @@ langfuse.create_prompt(
         {"role": "user", "content": "{{city}}の人口は？"}
     ],
     config={
-        "model": "us.anthropic.claude-sonnet-4-6-20250929-v1:0",
+        "model": "us.anthropic.claude-sonnet-4-6",
         "temperature": 1,
     }
 )

@@ -39,7 +39,7 @@ cfg = Config(
     read_timeout=300,
 )
 llm_with_tools = init_chat_model(
-    model="us.anthropic.claude-sonnet-4-6-20250929-v1:0",
+    model="us.anthropic.claude-sonnet-4-6",
     model_provider="bedrock_converse",
     config=cfg,
 ).bind_tools(tools)
