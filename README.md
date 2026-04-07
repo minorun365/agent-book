@@ -9,7 +9,7 @@ https://www.sbcr.jp/product/4815636609/
 
 ## 📣 新着のお知らせ（詳細は後述）
 
-- 【2026/4/5更新】書籍で使用しているClaude 3.7 Sonnetが廃止されたため、サンプルコードのモデルIDをClaude Sonnet 4.6に更新しました。
+- 【2026/4/7更新】書籍で使用しているClaude 3.7 Sonnetが廃止されたため、サンプルコードのモデルIDをClaude Sonnet 4.6に更新しました。
 - 【2026/3/9更新】第6章 Mastraのバージョンアップに伴いエージェントネットワークのAPIが変更されたため、サンプルコードを修正しました。
 - 【2025/12/31更新】第6章 AWS MCPサーバーのバージョンアップでエラーが出るようになったため、サンプルコード修正しました。
 - 【2025/12/10更新】第5章 仕様変更により5.2のハンズオンでエラーが出るようになったため、コピペ用コマンドを修正しました。
@@ -35,7 +35,7 @@ https://www.sbcr.jp/product/4815636609/
 
 ### 全章共通
 
-- 書籍のサンプルコードで使用しているClaude 3.7 Sonnetは、2026年2月に廃止されました。本リポジトリのサンプルコードはClaude Sonnet 4.6（`us.anthropic.claude-sonnet-4-6`）に更新済みです。気づいてくださった[tomet37](https://github.com/tomet37)さん、ありがとうございます！
+- 書籍のサンプルコードで使用しているClaude 3.7 Sonnetは、2026年2月に廃止されました。本リポジトリのサンプルコードはClaude Sonnet 4.6（`us.anthropic.claude-sonnet-4-6`）に更新済みです。気づいてくださった[tomet37](https://github.com/tomet37)さん、[katofrfr](https://github.com/katofrfr)さん、ありがとうございます！
 
 ### 第2章
 
