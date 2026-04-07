@@ -1,5 +1,5 @@
 pydantic==2.11.7
-langgraph==0.6.6
+langgraph==1.0.10rc1
 boto3==1.40.21
 langchain==0.3.27
 langchain-aws==0.2.31
