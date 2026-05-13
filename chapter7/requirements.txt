@@ -1,4 +1,4 @@
-langchain==0.3.27
+langchain==0.3.30
 langfuse==3.3.4
 python-dotenv==1.1.1
 langchain-aws==0.2.31
