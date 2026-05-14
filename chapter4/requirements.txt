@@ -1,7 +1,7 @@
 pydantic==2.11.7
 langgraph==0.6.6
 boto3==1.40.21
-langchain==0.3.27
+langchain==0.3.30
 langchain-aws==0.2.31
 langchain-tavily==0.2.11
 python_dotenv==1.1.1
