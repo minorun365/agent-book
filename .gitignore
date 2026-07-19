@@ -1,5 +1,15 @@
 .env
+
+# Claude設定（個人設定のため除外）
 .claude
+
+# Kiro設定（個人設定・シークレットが含まれうるものを除外）
+.kiro/settings/
+.kiro/cache/
+# .kiro/steering/, .kiro/skills/, .kiro/specs/ はgit管理する
+
+# エージェント設定（チーム共通設定のためgit管理する）
+# .agents/ はgit管理する
 
 # Node.js関連
 node_modules/
