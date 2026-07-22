@@ -62,6 +62,7 @@ system_prompt = """
 あなたの責務はAWSドキュメントを検索し、Markdown形式としてファイル出力することです。
 - 検索後、Markdown形式に変換してください。
 - 検索は最大で2回までとし、その時点での情報を出力してください。
+- まとめた情報は、.mdファイルとしてファイル保存してください。
 """
 async def agent(state: AgentState) -> Dict[str, List[AIMessage]]:    
     response = await llm_with_tools.ainvoke(
