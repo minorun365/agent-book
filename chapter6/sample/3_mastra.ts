@@ -18,7 +18,7 @@ const lister = new Agent({
   name: 'lister',
   instructions: '調査を行い、箇条書きで簡潔に回答します。',
   description: '調査を行い、箇条書きで簡潔に回答します。',
-  model: bedrock('us.anthropic.claude-sonnet-4-20250514-v1:0'),
+  model: bedrock('us.anthropic.claude-sonnet-4-6'),
 });
 
 // 執筆エージェントを作成
@@ -27,7 +27,7 @@ const writer = new Agent({
   name: 'writer',
   description: '調査素材をマージして完全なレポートを執筆します。',
   instructions: '調査素材をマージして完全なレポートを執筆します。',
-  model: bedrock('us.anthropic.claude-sonnet-4-20250514-v1:0'),
+  model: bedrock('us.anthropic.claude-sonnet-4-6'),
 });
 
 // オーケストレーターエージェントを作成（エージェントネットワーク機能を内包）
@@ -35,7 +35,7 @@ const orchestrator = new Agent({
   id: 'orchestrator',
   name: 'orchestrator',
   instructions: '企業について調査できます。また、調査素材をマージしてレポートを執筆できます',
-  model: bedrock('us.anthropic.claude-sonnet-4-20250514-v1:0'),
+  model: bedrock('us.anthropic.claude-sonnet-4-6'),
   agents: { lister, writer },
   memory: memory,
 });

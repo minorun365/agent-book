@@ -3,7 +3,7 @@ from langgraph.graph import StateGraph, END
 
 # モデルを定義
 model = init_chat_model(
-    model="us.anthropic.claude-sonnet-4-20250514-v1:0",
+    model="us.anthropic.claude-sonnet-4-6",
     model_provider="bedrock_converse"
 )
 

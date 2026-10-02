@@ -20,7 +20,7 @@ const addTool = createTool({
 const agent = new Agent({
     name: "計算エージェント",
     instructions: "ツールを使って足し算ができます。",
-    model: bedrock("us.anthropic.claude-sonnet-4-20250514-v1:0"),
+    model: bedrock("us.anthropic.claude-sonnet-4-6"),
     tools: [addTool],
 });
 
