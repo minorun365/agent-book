@@ -9,6 +9,7 @@ https://www.sbcr.jp/product/4815636609/
 
 ## 📣 新着のお知らせ（詳細は後述）
 
+- 【2026/11/19更新】第3章 Streamlit Community Cloudへデプロイしたアプリの公開範囲と、IAMユーザーの権限についての注意を追記しました。
 - 【2026/11/19更新】第4章・第5章・第6章 セキュリティ修正のため、uvとNext.jsのバージョン指定を更新しました。
 - 【2026/10/2更新】書籍で使用しているClaude Sonnet 4が2026/10/14に廃止されるため、残っていたサンプルコードのモデルIDをClaude Sonnet 4.6に更新しました。
 - 【2026/7/23更新】第4章 MCPサーバーと使うハンズオンでファイル保存されないケースがあるため、システムプロンプトを更新しました。
@@ -46,6 +47,27 @@ https://www.sbcr.jp/product/4815636609/
 - P.36： 2.2.2冒頭のmemoに記載のように、Bedrockのモデルアクセス有効化手順が変更されました。AWSマネジメントコンソールからAmazon Bedrockのサービス画面へ移動したら、左サイドバーの「チャット/テキストのプレイグラウンド」にアクセスして、AnthropicのClaude Sonnet 4.5モデルを選択します。すると、ユースケースの提出フォームが表示されるため、本書P.38の記載に従って内容を記入し送信してください。2〜3分で、すべてのAnthropicモデルが利用可能となります。手順の詳細は[こちら](https://qiita.com/minorun365/items/7070a0206547cc6dc650)にも記載しています。
 
 ### 第3章
+
+- P.89： Streamlit Community Cloudへデプロイしたアプリは、公開リポジトリからデプロイすると誰でも開ける状態になります。URLを知った人が、みなさんのAWSアカウントの料金でエージェントを動かせてしまうため、次の対応をおすすめします。
+  - アプリの「Settings」→「Sharing」の「Who can view this app」で「Only specific people can view this app」を選ぶ（無料枠では非公開アプリは同時に1つまでです）
+  - Secretsに入れるIAMユーザーの権限は、Bedrockのモデル呼び出しだけに絞る（ポリシー例は下記）
+  - ハンズオンが終わったら、アプリを削除し、IAMユーザーのアクセスキーを無効化・削除する
+
+  ```json
+  {
+    "Version": "2012-10-17",
+    "Statement": [
+      {
+        "Effect": "Allow",
+        "Action": [
+          "bedrock:InvokeModel",
+          "bedrock:InvokeModelWithResponseStream"
+        ],
+        "Resource": "*"
+      }
+    ]
+  }
+  ```
 
 - P.60： 9/16にVoltAgent V1がリリースされました。Agentクラスから `llm` オプションが削除されたことに加え、VoltAgentクラスでサーバーの組み込みが必要となったため、[サンプルコード](https://github.com/minorun365/agent-book/blob/main/chapter3/sample/4_voltagent.ts)を更新しています。気づいてくださった[chiaoi](https://x.com/_chiaoi)さん、ありがとうございます！（参考：[公式ドキュメント](https://voltagent.dev/docs/getting-started/migration-guide/)）
 
