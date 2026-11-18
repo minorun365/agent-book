@@ -9,6 +9,7 @@ https://www.sbcr.jp/product/4815636609/
 
 ## 📣 新着のお知らせ（詳細は後述）
 
+- 【2026/11/19更新】第4章・第5章・第6章 セキュリティ修正のため、uvとNext.jsのバージョン指定を更新しました。
 - 【2026/10/2更新】書籍で使用しているClaude Sonnet 4が2026/10/14に廃止されるため、残っていたサンプルコードのモデルIDをClaude Sonnet 4.6に更新しました。
 - 【2026/7/23更新】第4章 MCPサーバーと使うハンズオンでファイル保存されないケースがあるため、システムプロンプトを更新しました。
 - 【2026/4/7更新】書籍で使用しているClaude 3.7 Sonnetが廃止されたため、サンプルコードのモデルIDをClaude Sonnet 4.6に更新しました。
@@ -50,6 +51,7 @@ https://www.sbcr.jp/product/4815636609/
 
 ### 第4章
 
+- P.124： uvの古いバージョンが信頼する証明書の一部に、秘密鍵が漏えいした認証局（eMudhra）のものが含まれていたため、[コピペ用のコマンドファイル](https://github.com/minorun365/agent-book/blob/main/chapter4/%E3%82%B3%E3%83%94%E3%83%9A%E7%94%A8%E3%82%B3%E3%83%9E%E3%83%B3%E3%83%89.md)と `requirements.txt` のuvを `0.13.9` に更新しました。書籍の `uv==0.8.14` は `uv==0.13.9` に読み替えてください。使い方は変わりません。
 - P.122： 11月下旬頃から、4.3のハンズオン[コード](https://github.com/minorun365/agent-book/blob/main/chapter4/3_mcp_agent.py)を実行すると、エラーが発生するようになりました。2件の問題を含んでおり、Bedrock側のConverse APIの仕様変更と、Filesystems MCPサーバーのバージョンアップに伴う仕様変更が原因と思われます。本書の[サンプルコード](https://github.com/minorun365/agent-book/blob/main/chapter4/3_mcp_agent.py)を更新済みです。気づいてくださった[TasukuMatsuura](https://github.com/TasukuMatsuura)さん、ありがとうございます！
 - P.122： 検索結果をコンソール上にのみ表示し、ファイル保存しないケースが多いため、システムプロンプトを更新しました。本書の[サンプルコード](https://github.com/minorun365/agent-book/blob/main/chapter4/3_mcp_agent.py)を更新済みです。気づいてくださった[kenmori260](https://github.com/kenmori260)さん、ありがとうございます！
 
@@ -59,12 +61,14 @@ https://www.sbcr.jp/product/4815636609/
   - Mastra関連ライブラリのバージョンアップに伴い、インストールコマンドを一部更新しました。気づいてくださった[ytak-sagit](https://github.com/ytak-sagit)さん、ありがとうございます！
   - 第3刷のみ、Mastraのインストールコマンドに1箇所誤植がありました。`npx mastra init@0.11.3` ではなく `npx mastra@0.11.3 init` が正となります。気づいてくださった[Koichi](https://github.com/Koichi73)さん、ありがとうございます！
   - Zodライブラリのアップデートに伴い、後続のAmplifyビルドでエラーが発生するようになっていました。気づいてくださった[ryota0051](https://github.com/ryota0051)さん、ありがとうございます！
+- P.196： Next.jsの画像最適化まわりの脆弱性を回避できるよう、[コピペ用のコマンドファイル](https://github.com/minorun365/agent-book/blob/main/chapter5/%E3%82%B3%E3%83%94%E3%83%9A%E7%94%A8%E3%82%B3%E3%83%9E%E3%83%B3%E3%83%89.md)のNext.jsを `15.5.29` に更新しました。書籍の `create-next-app@15.5.9` は `create-next-app@15.5.29` に読み替えてください。以降の手順は変わりません。
 - P.196： 話題のReact脆弱性（React2Shellなど複数）を回避できるよう、[コピペ用のコマンドファイル](https://github.com/minorun365/agent-book/blob/main/chapter5/%E3%82%B3%E3%83%94%E3%83%9A%E7%94%A8%E3%82%B3%E3%83%9E%E3%83%B3%E3%83%89.md)を更新しました。
 
 ### 第6章
 
 - P.257： Mastraのバージョンアップ（@mastra/core v1.x）に伴い、エージェントネットワークのAPIが変更されました。`NewAgentNetwork` が廃止され、`Agent` クラスの `agents` オプションでネットワーク構成を定義する書き方に変わっています。本書の[サンプルコード](https://github.com/minorun365/agent-book/blob/main/chapter6/sample/3_mastra.ts)を更新済みです。
 - P.268： AWS API MCPサーバーのアップデートに伴い `Propagator xray not found` エラーが出るようになったため、MCPサーバーのバージョンを固定しました。本書の[サンプルコード](https://github.com/minorun365/agent-book/blob/main/chapter6/backend/src/api_master.py#L23)を更新済みです。気づいてくださった[ryota0051](https://github.com/ryota0051)さん、ありがとうございます！
+- 第6章のバックエンドで使うuvも、第4章と同じ理由で `requirements.txt` を `0.13.9` に更新しました。
 
 ### 付録
 
